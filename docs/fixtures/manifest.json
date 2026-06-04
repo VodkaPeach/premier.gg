@@ -1,0 +1,91 @@
+{
+  "captainPuuid": "mock-captain-0001",
+  "team": {
+    "name": "Mock Esports",
+    "tag": "MOCK",
+    "roster": [
+      {
+        "puuid": "mock-captain-0001",
+        "gameName": "Captain",
+        "tagLine": "NA1",
+        "agent": "add6443a-41bd-e414-f6ad-e58d267f4e95"
+      },
+      {
+        "puuid": "mock-p2",
+        "gameName": "Anchor",
+        "tagLine": "NA1",
+        "agent": "1e58de9c-4950-5125-93e9-a0aee9f98746"
+      },
+      {
+        "puuid": "mock-p3",
+        "gameName": "Flex",
+        "tagLine": "NA1",
+        "agent": "320b2a48-4d9b-a075-30f1-1f93a9b638fa"
+      },
+      {
+        "puuid": "mock-p4",
+        "gameName": "Support",
+        "tagLine": "NA1",
+        "agent": "8e253930-3b4d-c4c6-3e9d-43f8d2c5b8b0"
+      },
+      {
+        "puuid": "mock-p5",
+        "gameName": "Entry",
+        "tagLine": "NA1",
+        "agent": "f94c3b30-42be-e959-889c-5aa313dba261"
+      }
+    ]
+  },
+  "matches": [
+    {
+      "matchId": "m-0001",
+      "map": "Ascent",
+      "result": "win",
+      "score": "13-8",
+      "opponent": {
+        "name": "Rival Squad",
+        "tag": "RVL"
+      }
+    },
+    {
+      "matchId": "m-0002",
+      "map": "Bind",
+      "result": "loss",
+      "score": "9-13",
+      "opponent": {
+        "name": "Team Two",
+        "tag": "TWO"
+      }
+    },
+    {
+      "matchId": "m-0003",
+      "map": "Ascent",
+      "result": "win",
+      "score": "13-10",
+      "opponent": {
+        "name": "Rival Squad",
+        "tag": "RVL"
+      }
+    },
+    {
+      "matchId": "m-0004",
+      "map": "Bind",
+      "result": "win",
+      "score": "13-6",
+      "opponent": {
+        "name": "Squad Three",
+        "tag": "THR"
+      }
+    },
+    {
+      "matchId": "m-0005",
+      "map": "Haven",
+      "result": "loss",
+      "score": "11-13",
+      "opponent": {
+        "name": "Four Gaming",
+        "tag": "FOR"
+      }
+    }
+  ]
+}

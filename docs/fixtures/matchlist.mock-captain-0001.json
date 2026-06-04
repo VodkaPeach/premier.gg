@@ -1,0 +1,27 @@
+[
+  {
+    "matchId": "m-0001",
+    "gameStartTimeMillis": 1717200000000,
+    "queueId": "premier"
+  },
+  {
+    "matchId": "m-0002",
+    "gameStartTimeMillis": 1717027200000,
+    "queueId": "premier"
+  },
+  {
+    "matchId": "m-0003",
+    "gameStartTimeMillis": 1716854400000,
+    "queueId": "premier"
+  },
+  {
+    "matchId": "m-0004",
+    "gameStartTimeMillis": 1716681600000,
+    "queueId": "premier"
+  },
+  {
+    "matchId": "m-0005",
+    "gameStartTimeMillis": 1716508800000,
+    "queueId": "premier"
+  }
+]
