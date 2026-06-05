@@ -1,0 +1,7 @@
+# Single-package repo. pnpm 11+ reads its settings from this file.
+# Allow these dependencies to run install/build scripts (blocked by default in pnpm 10+).
+# esbuild backs vitest; sharp is Next image optimization; unrs-resolver backs eslint-config-next.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true

@@ -1,43 +1,64 @@
-# docs/ — Phase 0 ⇄ Phase 1 seam scaffold
+# premier.gg
 
-This directory holds the **data-source seam** for premier.gg: the contract that lets the
-Phase 0 prototype run on mock data and Phase 1 swap in the real Riot API by changing
-**one class only** (`MockMatchSource` → `RiotMatchSource`).
+VALORANT Premier match analysis. Phase 0 runs entirely on mock fixtures behind a
+**data-source seam**: swapping mock data for the real Riot API in Phase 1/2 is a one-class
+change (`MockMatchSource` → `RiotMatchSource`) behind the `MatchSource` interface.
+
+See `docs/plan/roadmap.md` for the full phase plan.
+
+## Run the app (Phase 0)
 
 ```
-docs/
+pnpm install
+pnpm dev          # http://localhost:3000
+```
+
+- `/` — match list (mock data, via the seam)
+- `/matches/<id>` — parsed match detail (e.g. `/matches/m-0001`)
+
+## Scripts
+
+```
+pnpm dev          # Next.js dev server
+pnpm build        # production build
+pnpm test         # vitest (parser invariants + manifest reader)
+pnpm typecheck    # tsc --noEmit
+pnpm lint         # next lint
+pnpm fixtures     # regenerate seeded fixtures (deterministic, seed 1337)
+```
+
+## Code layout
+
+```
+src/
   match-source/      the seam
-    riot-dto.ts        raw val-match-v1 MatchDto types (the wire contract; fixtures conform to these)
+    riot-dto.ts        raw val-match-v1 MatchDto types (the wire contract; fixtures conform)
     index.ts           MatchSource interface + MatchlistEntry
-    mock-match-source.ts  reads fixtures/ (Phase 0). RiotMatchSource will mirror this in Phase 1.
+    mock-match-source.ts  reads fixtures/ (Phase 0). RiotMatchSource mirrors this in Phase 1.
   domain/            parsed model the UI + analysis consume (never the raw DTO)
     types.ts
     parse-match.ts     pure RiotMatchDto -> Match transform (derivations happen here, once)
-  geo/
-    calibration.ts     per-map world<->minimap transforms (forward + inverse)
-  content/
-    content-map.ts     agent / map / weapon UUID -> name resolution
-  fixtures/
-    generate.mjs       deterministic generator (seeded) -> emits everything below
-    manifest.json      describes the mock world
-    matchlist.<puuid>.json
-    matches/<matchId>.json
-  tests/
-    parse-match.test.ts  invariants over a generated fixture
+  geo/calibration.ts   per-map world<->minimap transforms (forward + inverse)
+  content/content-map.ts  agent / map / weapon UUID -> name resolution
+  fixtures/            seeded generator + emitted mock world
+    generate.mjs       deterministic (seed 1337); emits matches/, matchlist, manifest
+  lib/
+    match-source.ts    getMatchSource() — the single Phase 2 swap point
+    manifest.ts        reads manifest.json for list metadata
+  app/                 Next.js routes (list + detail)
+tests/
+  parse-match.test.ts  invariants over a generated fixture
 ```
-
-## Regenerate fixtures
-```
-node docs/fixtures/generate.mjs
-```
-Deterministic (seed 1337) — same output every run, so fixtures double as regression test data.
 
 ## Phase 1 swap
-Implement `RiotMatchSource` against the `MatchSource` interface (add auth header, base URL,
-rate-limit/backoff), set `MATCH_SOURCE=riot`. Parser, analysis, UI, and tests are unchanged.
+
+Implement `RiotMatchSource` against the `MatchSource` interface (auth header, base URL,
+rate-limit/backoff) and branch on it inside `src/lib/match-source.ts` (`MATCH_SOURCE=riot`).
+Parser, analysis, UI, and tests are unchanged.
 
 ## Fidelity caveats (verify in Phase 1)
+
 - Agent / weapon / armor / map UUIDs in `content/content-map.ts` are real published values but
   should be re-synced from `val-content-v1` once you have API access.
-- That Premier matches return via `matchlists/by-puuid` with `queueId: "premier"` and the standard
-  `MatchDto` is the day-1 validation task after RSO approval.
+- That Premier matches return via `matchlists/by-puuid` with `queueId: "premier"` and the
+  standard `MatchDto` is the day-1 validation task after RSO approval.
