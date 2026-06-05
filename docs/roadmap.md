@@ -8,12 +8,13 @@ team + opponent + positional analysis of their Premier matches, in English or Ch
 | Area | Decision |
 |---|---|
 | Depth | Stats **+ positional** (heatmaps / kill-plant maps); no full 2D replay |
-| Focus | **Team-centric + opponent _review_** (retrospective, **co-played only**). ⚠️ Riot prohibits *"scouting … seeing an opponent's stats before a match starts"* — reframe away from "scouting"; see **B-scout** 🚧👤 |
-| Auth/team | **Single captain** RSO login reconstructs the whole team — ⚠️ Riot opt-in policy may require **per-player** consent to display stats; see **B-consent** 🚧👤 |
+| Focus | **Team-centric + opponent _review_** (retrospective, **co-played only**). ✅ **Decided** — defense approved (B-scout): own-history-only, no search, co-played-only ⇒ not a scouting tool. |
+| Auth/team | **Single captain** RSO login reconstructs the whole team. ✅ **Decided** — single-captain consent model (display only data from the captain's own matches); residual opt-in tension tracked in **B-consent** 👤. |
 | Audience | Global Riot-operated regions; **EN/ZH** UI (Chinese = language, not CN/Tencent data) |
 | Monetization | **Free at launch, freemium-ready** (entitlement scaffolding now, no billing pre-launch) |
 | Launch seq. | **Submit early + public mock demo** while awaiting approval |
 | Map assets | **Official Riot minimap images** via val-content |
+| Brand | **premier.gg** (confirm-first): verify with Riot dev-rel + trademark check; independent branding + disclaimer; "Premier"/"VALORANT" descriptive-only; don't hard-commit until key approved (B-name) 👤 |
 | Stack | Next.js + TS, Auth.js (RSO), Postgres/Prisma, ECharts, SVG/D3, next-intl, Vercel |
 | Capacity | ~20 hrs/week, solo |
 
@@ -59,11 +60,15 @@ Checked the [VALORANT developer policy](https://developer.riotgames.com/docs/val
   `queueId` value (the sample shows `"unrated"`; Premier's value is *undocumented* — fixtures assume `"premier"`).
 
 **Policy — needs human/legal steering ⚠️**
-- 🚧👤 **B-scout:** prohibited use case — *"Scouting, which is seeing an opponents stats before a match starts."*
-  Our opponent feature must be retrospective ("matches you played"); "scouting" is risky framing and a plausible denial reason.
-  Defense: own-history-only, **no player/team search**, co-played-only (see "Why premier.gg is not a scouting tool" below).
-- 🚧👤 **B-consent:** required disclaimer — *"all players must first sign up for their service to display their
-  stats/gameplay data"* — in tension with the single-captain "reconstruct the whole team" model (teammates haven't opted in).
+- ✅👤 **B-scout — decided: defense approved.** Prohibited use case is *"Scouting, which is seeing an opponents stats before a match starts."*
+  We keep the opponent feature as **retrospective review** and rely on the architectural defense — own-history-only,
+  **no player/team search**, co-played-only (see "Why premier.gg is not a scouting tool" below). Remaining 👤: finalize the
+  not-a-scouting-tool wording in the application + legal copy.
+- ✅👤 **B-consent — decided: single-captain model.** The required disclaimer (*"all players must first sign up for their
+  service to display their stats/gameplay data"*) is in tension with showing non-opted-in teammates. **Scope/defense:**
+  display only data from matches the consenting captain played in (the own-history-only invariant covers teammates too);
+  provide unlink/delete + a teammate-removal path. **Residual risk** under a strict reading — validate at the Phase 7 legal
+  review and disclose the model in the application.
 - Confirmed (consistent with plan): no personal keys — production approval needs *"a working site, mockup,
   prototype, or rendering"* (our P1 demo); RSO mandatory; one product per key; free tier required (premium must be
   *"transformative"*); no betting/gambling. New endpoint seen: `recent-matches/by-queue/{queue}` (not needed for our flow).
@@ -100,7 +105,7 @@ lookup in any later phase.
 - Screens 1–8 (landing, consent/opt-in, simulated RSO, link success, mock dashboard, mock match detail, settings w/ unlink+delete, public profile).
 - EN/ZH skeleton, Privacy Policy + ToS, "not endorsed by Riot" notice, deploy to Vercel.
 - Write application answers + a 60-sec flow walkthrough; submit.
-- 👤 **The reviewer-facing demo + narrative — approval hinges on this.** Make the **not-a-scouting-tool** case explicitly: own-history-only, no player/team search, co-played-only (see B-scout defense). 👤 Privacy/ToS/consent copy (legal). 👤 **Product name/domain check** (using "Premier" in the name may conflict with Riot IP policy — decide before committing the brand).
+- 👤 **The reviewer-facing demo + narrative — approval hinges on this.** Make the **not-a-scouting-tool** case explicitly: own-history-only, no player/team search, co-played-only (see B-scout defense). 👤 Privacy/ToS/**consent** copy (legal) — reflect the **single-captain** model + required opt-in disclaimer (B-consent). 👤 **Name: premier.gg (confirm-first)** — confirm acceptability with Riot Developer Relations / a trademark check, ship independent branding + disclaimer, and don't hard-commit the brand until the key is approved (B-name).
 - **Exit:** demo is public, application is in Riot's queue.
 
 ### Phase 2 — RSO integration + real ingestion · **S–M work, calendar gated** · 🎯 **M3 (the unblock)** · 🚧 B1 B2 B4
@@ -126,12 +131,12 @@ lookup in any later phase.
 - 🚧 **Verify Riot minimap commercial-use terms** (B3). 👤 legal sign-off on asset use.
 - **Exit:** positional views for every played map, points landing correctly (validated by the round-trip check).
 
-### Phase 5 — Opponent review, retrospective (co-played) · **M** · 🎯 **M6** · 🚧 B-scout · 👤 · *(source-agnostic)*
+### Phase 5 — Opponent review, retrospective (co-played) · **M** · 🎯 **M6** · ✅ B-scout (defense approved) · 👤 · *(source-agnostic)*
 **Goal:** retrospective opponent profiles from matches your team actually played — *review of past matches, not pre-match prep.*
 - `OpponentProfile` aggregation: comp tendencies per map, attack-site preference + execute timing, eco patterns, key-player agent pools, defensive hold/kill locations.
 - Opponent UI with explicit "based on N matches vs you" framing; enforce the policy-safe boundary (own-history-only, **no player/team search**, never fetch non-co-played history); avoid "scouting"/pre-match-prep framing in copy.
-- 🚧👤 **B-scout gates this feature.** Riot prohibits *"seeing an opponent's stats before a match starts."* Legal sign-off required on framing/scope before ship; be prepared to constrain or cut if it reads as scouting.
-- **Exit:** retrospective opponent view for any opponent faced ≥1 time — *pending B-scout sign-off.*
+- ✅👤 **B-scout — defense approved.** Built as retrospective review; enforce the invariants (own-history-only, no search, co-played-only). Remaining 👤: final legal sign-off on the opponent-feature copy/framing.
+- **Exit:** retrospective opponent view for any opponent faced ≥1 time — *defense approved; pending final copy sign-off.*
 
 ### Phase 6 — i18n completion (EN/ZH) · **M** *(overlaps)* · 🎯 part of **M7** · 👤
 **Goal:** native-feeling Chinese, not machine-translated.
@@ -141,7 +146,7 @@ lookup in any later phase.
 
 ### Phase 7 — Compliance, privacy & hardening · **M** · 🎯 **M7** · 🚧 B-compliance · 👤
 **Goal:** safe to expose publicly.
-- End-to-end **delete-my-data** + unlink; retention policy; token-security audit; consent enforcement (incl. **per-player opt-in** if B-consent requires it); data export; Riot-policy compliance pass; rate-limit/quotas; error handling; observability; backups; run the security review.
+- End-to-end **delete-my-data** + unlink; retention policy; token-security audit; consent enforcement (**single-captain** model — captain unlink/delete + teammate-removal path; validate the model here, B-consent); data export; Riot-policy compliance pass; rate-limit/quotas; error handling; observability; backups; run the security review.
 - 👤 **Final legal/privacy review** before any public exposure of real player data.
 - **Exit:** compliance checklist green, security review passed.
 
@@ -164,7 +169,7 @@ lookup in any later phase.
 | M3 | **RSO approved + first real Premier match ingested** | unblocks real-data product |
 | M4 | Player + team analytics complete | core value proven |
 | M5 | Positional / heatmaps live | the rib.gg-style differentiator |
-| M6 | Opponent review (retrospective) live | full feature set — gated by B-scout sign-off |
+| M6 | Opponent review (retrospective) live | full feature set — B-scout defense approved; final copy sign-off pending |
 | M7 | EN/ZH complete + compliance/security passed | safe + global-ready |
 | M8 | **Public beta launch** | the target |
 
@@ -174,21 +179,21 @@ lookup in any later phase.
 |---|---|---|---|
 | **B1** | **RSO/production approval** — up to ~3+ wks, can be denied | External, critical path | High-quality demo + clear flow (Phase 1); design around known rejection reasons; have a resubmit plan |
 | **B2** | (a) Premier may not surface via `matchlists/by-puuid`; (b) Premier `queueId` value is undocumented (fixtures assume `"premier"`) | Technical, unverified | Validate both first thing at M3. DTO field names already validated vs an official sample; positional data confirmed present. If shape differs, adapt `parseMatch`/the queue filter (isolated) |
-| **B-scout** | Riot prohibits *"scouting … seeing an opponent's stats before a match starts"* — directly touches the opponent feature (P5) | Legal/policy, critical to approval | Reframe to **retrospective review** of co-played matches; drop "scouting" language; legal sign-off before P5 ships; be ready to constrain/cut |
-| **B-consent** | Required opt-in disclaimer (*"all players must first sign up … to display their stats"*) conflicts with single-captain "reconstruct the whole team" | Legal/policy | Decide consent model in P1 (per-player opt-in? captain-only with teammate data limited?); enforce in P7 |
+| **B-scout** ✅ | Riot prohibits *"scouting … seeing an opponent's stats before a match starts"* — directly touches the opponent feature (P5) | Legal/policy, critical to approval | **Decided: defense approved.** Keep as retrospective review; enforce hard invariants (own-history-only, no search, co-played-only); state the not-a-scouting-tool case in the application. Remaining: final legal sign-off on copy |
+| **B-consent** ✅ | Required opt-in disclaimer (*"all players must first sign up … to display their stats"*) conflicts with single-captain "reconstruct the whole team" | Legal/policy | **Decided: single-captain model** — show only data from the captain's own matches; unlink/delete + teammate-removal path. Residual tension with strict opt-in reading; validate at P7 legal review and disclose in the application |
 | **B3** | Riot minimap **commercial-use** terms for a freemium product | Legal | Verify under Riot policies before Phase 4 ships; fallback = community/own assets |
 | **B4** | Rate limits + Vercel function timeouts during ingestion | Technical | Chunked on-demand pulls, backoff, aggressive caching; move ingestion to a worker if needed |
 | **B5** | No official Premier metadata API (standings/schedule/rosters) | Data gap | Reconstruct team/opponent context from match data (already the chosen approach) |
-| **B-name** | "Premier" in product name/domain may conflict with Riot IP policy | Legal/brand | Decide before committing brand (Phase 1) |
+| **B-name** | "Premier" in product name/domain may conflict with Riot IP policy | Legal/brand | **Direction: keep premier.gg, confirm-first.** "Premier" is generic (likely not a Riot trademark) but highest-association for approval. Confirm w/ Riot dev-rel + trademark check; independent branding + disclaimer; descriptive-only use of VALORANT/Premier; don't hard-commit brand until key approved |
 | **B-comp** | Compliance must precede any public real-data exposure | Process | Phase 7 gates Phase 8 |
 
 ## Where you (human) must steer
 
 1. **Phase 1 — the Riot application & demo.** The single highest-leverage human node; approval depends on the story you tell.
-2. **Opponent-feature framing** (B-scout) — decide how to present opponent review so it isn't "scouting"; legal sign-off. *Could be a denial reason if mishandled.*
-3. **Consent model** (B-consent) — per-player opt-in vs captain-only; decide in Phase 1, shapes the data model and copy.
+2. **Opponent-feature copy** (B-scout) — ✅ defense approved; remaining is final legal sign-off on application/UI wording so it reads as review, not scouting.
+3. **Consent model** (B-consent) — ✅ decided single-captain; remaining is legal validation of the model (Phase 7) + disclosing it in the application.
 4. **Legal copy** — privacy policy, ToS, consent/disclaimer wording (must cover the opt-in disclaimer Riot requires).
-5. **Brand/name decision** (B-name) before you commit a domain/identity.
+5. **Brand/name** (B-name) — ✅ premier.gg, confirm-first: verify with dev-rel / trademark check before committing the brand.
 6. **Map-asset commercial terms** sign-off (B3).
 7. **RSO rejection handling** — judgment call on re-scope if denied.
 8. **ZH terminology review** — needs a human who knows competitive Valorant in Chinese.

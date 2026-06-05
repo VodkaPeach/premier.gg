@@ -4,7 +4,7 @@
 // These model the OFFICIAL developer API (production key), validated 2026-06-05 against an
 // official sample response: `puuid`, `queueId`, `gameTime`/`roundTime`. Do NOT "fix" these to
 // match community client-API docs (techchrism), which use `subject`/`queueID`/`timeSinceRoundStartMillis` —
-// that is the in-game client API, a different contract. See docs/plan/roadmap.md "policy & data findings".
+// that is the in-game client API, a different contract. See docs/roadmap.md "policy & data findings".
 
 export interface RiotMatchDto {
   matchInfo: MatchInfoDto;

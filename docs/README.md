@@ -4,7 +4,7 @@ VALORANT Premier match analysis. Phase 0 runs entirely on mock fixtures behind a
 **data-source seam**: swapping mock data for the real Riot API in Phase 1/2 is a one-class
 change (`MockMatchSource` → `RiotMatchSource`) behind the `MatchSource` interface.
 
-See `docs/plan/roadmap.md` for the full phase plan.
+See `docs/roadmap.md` for the full phase plan.
 
 ## Run the app (Phase 0)
 
@@ -70,6 +70,6 @@ community docs (e.g. techchrism's valapidocs) describe — that one uses differe
   `matchlists/by-puuid` at all, and (b) the Premier `queueId` value — the official sample shows
   `"unrated"`; Premier's value is undocumented, so the fixtures' `queueId: "premier"` (and the
   `queueId === "premier"` filter in the list route) is a provisional assumption.
-- **Policy constraints** (see `docs/plan/roadmap.md` — B-scout, B-consent): Riot prohibits pre-match
+- **Policy constraints** (see `docs/roadmap.md` — B-scout, B-consent): Riot prohibits pre-match
   "scouting", and requires player opt-in to display stats. These shape the opponent feature and the
   consent model — they are product/legal decisions, not code caveats.

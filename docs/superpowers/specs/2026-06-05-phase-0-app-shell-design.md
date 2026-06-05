@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-05
 **Status:** Approved (brainstorming) — ready for implementation plan
-**Scope owner:** Phase 0 "Foundations & seam" (see `docs/plan/roadmap.md`)
+**Scope owner:** Phase 0 "Foundations & seam" (see `docs/roadmap.md`)
 
 ## Goal
 
