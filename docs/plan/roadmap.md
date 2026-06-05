@@ -61,11 +61,29 @@ Checked the [VALORANT developer policy](https://developer.riotgames.com/docs/val
 **Policy — needs human/legal steering ⚠️**
 - 🚧👤 **B-scout:** prohibited use case — *"Scouting, which is seeing an opponents stats before a match starts."*
   Our opponent feature must be retrospective ("matches you played"); "scouting" is risky framing and a plausible denial reason.
+  Defense: own-history-only, **no player/team search**, co-played-only (see "Why premier.gg is not a scouting tool" below).
 - 🚧👤 **B-consent:** required disclaimer — *"all players must first sign up for their service to display their
   stats/gameplay data"* — in tension with the single-captain "reconstruct the whole team" model (teammates haven't opted in).
 - Confirmed (consistent with plan): no personal keys — production approval needs *"a working site, mockup,
   prototype, or rendering"* (our P1 demo); RSO mandatory; one product per key; free tier required (premium must be
   *"transformative"*); no betting/gambling. New endpoint seen: `recent-matches/by-queue/{queue}` (not needed for our flow).
+
+### Why premier.gg is not a scouting tool (the B-scout defense)
+
+The architecture *structurally* prevents scouting — these are design guarantees, not just framing, and
+should be stated explicitly in the Riot application narrative:
+
+- **Own-history-only.** A user can only ever pull *their own* match history, via their own RSO opt-in.
+  There is no mechanism to query an arbitrary player or team.
+- **No search.** The product has **no player/team search or lookup**. You cannot type in an opponent and get their stats.
+- **Co-played-only.** The *only* way a user sees any opponent information is as a by-product of matches they
+  personally played against that opponent, recently enough to be in their own history. It is **retrospective
+  review of shared matches**, not intelligence-gathering on arbitrary opponents.
+
+Contrast with the prohibited case — *"seeing an opponent's stats **before a match starts**"* implies looking up
+an opponent you are *about* to face. premier.gg has **no opponent-lookup surface at all**, so it cannot do that.
+Keep these three constraints as **hard product invariants**: do not add player/team search or arbitrary-puuid
+lookup in any later phase.
 
 ---
 
@@ -82,13 +100,13 @@ Checked the [VALORANT developer policy](https://developer.riotgames.com/docs/val
 - Screens 1–8 (landing, consent/opt-in, simulated RSO, link success, mock dashboard, mock match detail, settings w/ unlink+delete, public profile).
 - EN/ZH skeleton, Privacy Policy + ToS, "not endorsed by Riot" notice, deploy to Vercel.
 - Write application answers + a 60-sec flow walkthrough; submit.
-- 👤 **The reviewer-facing demo + narrative — approval hinges on this.** 👤 Privacy/ToS/consent copy (legal). 👤 **Product name/domain check** (using "Premier" in the name may conflict with Riot IP policy — decide before committing the brand).
+- 👤 **The reviewer-facing demo + narrative — approval hinges on this.** Make the **not-a-scouting-tool** case explicitly: own-history-only, no player/team search, co-played-only (see B-scout defense). 👤 Privacy/ToS/consent copy (legal). 👤 **Product name/domain check** (using "Premier" in the name may conflict with Riot IP policy — decide before committing the brand).
 - **Exit:** demo is public, application is in Riot's queue.
 
 ### Phase 2 — RSO integration + real ingestion · **S–M work, calendar gated** · 🎯 **M3 (the unblock)** · 🚧 B1 B2 B4
 **Goal:** real login + pull real Premier matches.
 - `RiotMatchSource` (auth header, regional routing americas/europe/asia, rate-limit/backoff, retries) behind the existing interface.
-- Auth.js custom RSO provider; encrypted token storage + refresh.
+- Auth.js custom RSO provider; encrypted token storage + refresh. **Invariant:** ingest only the logged-in user's own history — no arbitrary player/team lookup or search (preserves the B-scout defense).
 - Ingestion: matchlist → details, filter to Premier, cache raw + parsed to Postgres, dedupe. `RiotMatchSource.getMatchlist` must unwrap the real `{ puuid, history[] }` envelope (the seam already returns `MatchlistEntry[]`).
 - 🚧 **Day-1 validation (B2):** (a) confirm Premier matches surface via `matchlists/by-puuid`; (b) confirm the Premier `queueId` value (sample shows `"unrated"`; Premier's is undocumented — fixtures assume `"premier"`, so the `queueId==="premier"` filter in the list route may need updating). DTO field names are already validated against an official sample.
 - 👤 If **denied**: re-scope per rejection reason and resubmit (treat as a real branch, not an edge case).
@@ -111,7 +129,7 @@ Checked the [VALORANT developer policy](https://developer.riotgames.com/docs/val
 ### Phase 5 — Opponent review, retrospective (co-played) · **M** · 🎯 **M6** · 🚧 B-scout · 👤 · *(source-agnostic)*
 **Goal:** retrospective opponent profiles from matches your team actually played — *review of past matches, not pre-match prep.*
 - `OpponentProfile` aggregation: comp tendencies per map, attack-site preference + execute timing, eco patterns, key-player agent pools, defensive hold/kill locations.
-- Opponent UI with explicit "based on N matches vs you" framing; enforce the policy-safe boundary (never fetch non-co-played history); avoid "scouting"/pre-match-prep framing in copy.
+- Opponent UI with explicit "based on N matches vs you" framing; enforce the policy-safe boundary (own-history-only, **no player/team search**, never fetch non-co-played history); avoid "scouting"/pre-match-prep framing in copy.
 - 🚧👤 **B-scout gates this feature.** Riot prohibits *"seeing an opponent's stats before a match starts."* Legal sign-off required on framing/scope before ship; be prepared to constrain or cut if it reads as scouting.
 - **Exit:** retrospective opponent view for any opponent faced ≥1 time — *pending B-scout sign-off.*
 
