@@ -1,4 +1,15 @@
-# CLAUDE.md
+# premier.gg — project context
+
+VALORANT Premier match analysis; mock-data app behind a one-swap data-source seam.
+Read first:
+- @docs/README.md — what it is, how to run, code layout, fidelity caveats
+- @docs/plan/roadmap.md — phases, milestones, blockers (incl. B-scout / B-consent), locked decisions
+
+Toolchain: use `corepack pnpm <cmd>` (bare `pnpm` is not on PATH).
+
+---
+
+# Development guidelines
 
 Behavioral guidelines to reduce common LLM coding mistakes. Merge with project-specific instructions as needed.
 
