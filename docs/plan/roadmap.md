@@ -8,8 +8,8 @@ team + opponent + positional analysis of their Premier matches, in English or Ch
 | Area | Decision |
 |---|---|
 | Depth | Stats **+ positional** (heatmaps / kill-plant maps); no full 2D replay |
-| Focus | **Team-centric + opponent scouting**, scouting limited to **co-played** matches |
-| Auth/team | **Single captain** RSO login reconstructs the whole team |
+| Focus | **Team-centric + opponent _review_** (retrospective, **co-played only**). ⚠️ Riot prohibits *"scouting … seeing an opponent's stats before a match starts"* — reframe away from "scouting"; see **B-scout** 🚧👤 |
+| Auth/team | **Single captain** RSO login reconstructs the whole team — ⚠️ Riot opt-in policy may require **per-player** consent to display stats; see **B-consent** 🚧👤 |
 | Audience | Global Riot-operated regions; **EN/ZH** UI (Chinese = language, not CN/Tencent data) |
 | Monetization | **Free at launch, freemium-ready** (entitlement scaffolding now, no billing pre-launch) |
 | Launch seq. | **Submit early + public mock demo** while awaiting approval |
@@ -34,7 +34,7 @@ pending. Only a thin `RiotMatchSource` swap + a data-shape validation actually n
 ```
  P0 ─ P1 ──┬─────────────────────────────► (build continues on fixtures)
  (seam)   (submit) │                         P3 ─ P4 ─ P5 ─ P6
-                   │                          (analytics, positional, scouting, i18n)
+                   │                          (analytics, positional, opp-review, i18n)
                    └─[ RSO approval wait ]──► P2 (swap to real data) ─┐
                                                                       ▼
                                                        P7 (compliance) ─ P8 (public beta) 🎯
@@ -44,13 +44,38 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 
 ---
 
+## Riot policy & data findings (verified 2026-06-05)
+
+Checked the [VALORANT developer policy](https://developer.riotgames.com/docs/valorant) and the
+`val-match-v1` schema against an [official sample response](https://gist.github.com/RiotTuxedo/34e1af353d9d340619cbbfa4579fc81c).
+
+**Data — mostly validated ✅**
+- DTO field names in `riot-dto.ts` match the **official developer API** (`puuid`, `queueId`, `gameTime`/`roundTime`).
+  NB the popular community schema (techchrism's valapidocs) documents the *in-game client API*
+  (`subject`, `queueID`, `timeSinceRoundStartMillis`) — **not** our target. Don't model against it.
+- Per-kill `playerLocations`, `victimLocation`, and plant/defuse `{x,y}` coordinates are **present** in the
+  official sample → the positional layer (P4) is technically feasible (its biggest risk is retired).
+- Still **unverified** (→ **B2**): whether Premier surfaces via `matchlists/by-puuid`, and the Premier
+  `queueId` value (the sample shows `"unrated"`; Premier's value is *undocumented* — fixtures assume `"premier"`).
+
+**Policy — needs human/legal steering ⚠️**
+- 🚧👤 **B-scout:** prohibited use case — *"Scouting, which is seeing an opponents stats before a match starts."*
+  Our opponent feature must be retrospective ("matches you played"); "scouting" is risky framing and a plausible denial reason.
+- 🚧👤 **B-consent:** required disclaimer — *"all players must first sign up for their service to display their
+  stats/gameplay data"* — in tension with the single-captain "reconstruct the whole team" model (teammates haven't opted in).
+- Confirmed (consistent with plan): no personal keys — production approval needs *"a working site, mockup,
+  prototype, or rendering"* (our P1 demo); RSO mandatory; one product per key; free tier required (premium must be
+  *"transformative"*); no betting/gambling. New endpoint seen: `recent-matches/by-queue/{queue}` (not needed for our flow).
+
+---
+
 ## Phases
 
-### Phase 0 — Foundations & seam · **S** · ✅ largely done
+### Phase 0 — Foundations & seam · **S** · ✅ **done**
 **Goal:** the contract that makes the mock→real swap a one-class change.
-- Done: `docs/` seam (DTO types, `MatchSource`, `MockMatchSource`), generated fixtures, `parseMatch`, calibration, content map.
-- Remaining: scaffold the actual Next.js app (repo, CI, lint, vitest, Prisma), promote `docs/` types into `src/`, wire `MockMatchSource` into a route.
-- **Exit:** `dev` server boots, tests green, a page renders a parsed fixture.
+- Done: seam (DTO types, `MatchSource`, `MockMatchSource`), generated fixtures, `parseMatch`, calibration, content map.
+- Done: Next.js app (TS, ESLint, vitest) scaffolded; seam promoted `docs/` → `src/`; `getMatchSource()` factory (the single swap point); match list (`/`) + detail (`/matches/[id]`) routes render parsed fixtures. CI and Prisma deliberately **deferred** (no DB read until P2).
+- **Exit met:** `dev` boots, 8 tests green, pages render a parsed fixture.
 
 ### Phase 1 — Prototype shell + public demo + submit application · **M** · 🎯 **M2** · 👤👤
 **Goal:** deployed clickable demo (mock data) showing the full user flow, and the production + RSO application **submitted** (starts the clock).
@@ -64,8 +89,8 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 **Goal:** real login + pull real Premier matches.
 - `RiotMatchSource` (auth header, regional routing americas/europe/asia, rate-limit/backoff, retries) behind the existing interface.
 - Auth.js custom RSO provider; encrypted token storage + refresh.
-- Ingestion: matchlist → details, filter `queueId="premier"`, cache raw + parsed to Postgres, dedupe.
-- 🚧 **Day-1 validation: confirm Premier returns via matchlist with the standard MatchDto** (B2).
+- Ingestion: matchlist → details, filter to Premier, cache raw + parsed to Postgres, dedupe. `RiotMatchSource.getMatchlist` must unwrap the real `{ puuid, history[] }` envelope (the seam already returns `MatchlistEntry[]`).
+- 🚧 **Day-1 validation (B2):** (a) confirm Premier matches surface via `matchlists/by-puuid`; (b) confirm the Premier `queueId` value (sample shows `"unrated"`; Premier's is undocumented — fixtures assume `"premier"`, so the `queueId==="premier"` filter in the list route may need updating). DTO field names are already validated against an official sample.
 - 👤 If **denied**: re-scope per rejection reason and resubmit (treat as a real branch, not an edge case).
 - **Exit:** a real captain login ingests real Premier matches; one match parses identically to a fixture.
 
@@ -79,14 +104,16 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 ### Phase 4 — Positional layer · **M–L** · 🎯 **M5** · 🚧 B3 · *(source-agnostic)*
 **Goal:** kill/death/plant maps + heatmaps on official Riot minimaps.
 - Fetch `displayIcon` minimaps via val-content; wire the world→minimap forward transform (already built); SVG/Canvas overlay; heatmap rendering; filters; surface the "event-points only, not continuous tracks" caveat in-UI.
+- ✅ Feasibility confirmed: per-kill `playerLocations` + plant/defuse coords are present in the official `val-match-v1` sample (see policy findings).
 - 🚧 **Verify Riot minimap commercial-use terms** (B3). 👤 legal sign-off on asset use.
 - **Exit:** positional views for every played map, points landing correctly (validated by the round-trip check).
 
-### Phase 5 — Opponent scouting (co-played) · **M** · 🎯 **M6** · *(source-agnostic)*
-**Goal:** opponent profiles from matches your team actually played.
+### Phase 5 — Opponent review, retrospective (co-played) · **M** · 🎯 **M6** · 🚧 B-scout · 👤 · *(source-agnostic)*
+**Goal:** retrospective opponent profiles from matches your team actually played — *review of past matches, not pre-match prep.*
 - `OpponentProfile` aggregation: comp tendencies per map, attack-site preference + execute timing, eco patterns, key-player agent pools, defensive hold/kill locations.
-- Opponent UI with explicit "based on N matches vs you" framing; enforce the policy-safe boundary (never fetch non-co-played history).
-- **Exit:** scouting view for any opponent faced ≥1 time.
+- Opponent UI with explicit "based on N matches vs you" framing; enforce the policy-safe boundary (never fetch non-co-played history); avoid "scouting"/pre-match-prep framing in copy.
+- 🚧👤 **B-scout gates this feature.** Riot prohibits *"seeing an opponent's stats before a match starts."* Legal sign-off required on framing/scope before ship; be prepared to constrain or cut if it reads as scouting.
+- **Exit:** retrospective opponent view for any opponent faced ≥1 time — *pending B-scout sign-off.*
 
 ### Phase 6 — i18n completion (EN/ZH) · **M** *(overlaps)* · 🎯 part of **M7** · 👤
 **Goal:** native-feeling Chinese, not machine-translated.
@@ -96,7 +123,7 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 
 ### Phase 7 — Compliance, privacy & hardening · **M** · 🎯 **M7** · 🚧 B-compliance · 👤
 **Goal:** safe to expose publicly.
-- End-to-end **delete-my-data** + unlink; retention policy; token-security audit; consent enforcement; data export; Riot-policy compliance pass; rate-limit/quotas; error handling; observability; backups; run the security review.
+- End-to-end **delete-my-data** + unlink; retention policy; token-security audit; consent enforcement (incl. **per-player opt-in** if B-consent requires it); data export; Riot-policy compliance pass; rate-limit/quotas; error handling; observability; backups; run the security review.
 - 👤 **Final legal/privacy review** before any public exposure of real player data.
 - **Exit:** compliance checklist green, security review passed.
 
@@ -119,7 +146,7 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 | M3 | **RSO approved + first real Premier match ingested** | unblocks real-data product |
 | M4 | Player + team analytics complete | core value proven |
 | M5 | Positional / heatmaps live | the rib.gg-style differentiator |
-| M6 | Opponent scouting live | full feature set |
+| M6 | Opponent review (retrospective) live | full feature set — gated by B-scout sign-off |
 | M7 | EN/ZH complete + compliance/security passed | safe + global-ready |
 | M8 | **Public beta launch** | the target |
 
@@ -128,7 +155,9 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 | ID | Blocker | Type | Mitigation |
 |---|---|---|---|
 | **B1** | **RSO/production approval** — up to ~3+ wks, can be denied | External, critical path | High-quality demo + clear flow (Phase 1); design around known rejection reasons; have a resubmit plan |
-| **B2** | Premier may not surface in match API as standard MatchDto | Technical, unverified | Validate first thing at M3; if shape differs, adapt `parseMatch` (isolated) |
+| **B2** | (a) Premier may not surface via `matchlists/by-puuid`; (b) Premier `queueId` value is undocumented (fixtures assume `"premier"`) | Technical, unverified | Validate both first thing at M3. DTO field names already validated vs an official sample; positional data confirmed present. If shape differs, adapt `parseMatch`/the queue filter (isolated) |
+| **B-scout** | Riot prohibits *"scouting … seeing an opponent's stats before a match starts"* — directly touches the opponent feature (P5) | Legal/policy, critical to approval | Reframe to **retrospective review** of co-played matches; drop "scouting" language; legal sign-off before P5 ships; be ready to constrain/cut |
+| **B-consent** | Required opt-in disclaimer (*"all players must first sign up … to display their stats"*) conflicts with single-captain "reconstruct the whole team" | Legal/policy | Decide consent model in P1 (per-player opt-in? captain-only with teammate data limited?); enforce in P7 |
 | **B3** | Riot minimap **commercial-use** terms for a freemium product | Legal | Verify under Riot policies before Phase 4 ships; fallback = community/own assets |
 | **B4** | Rate limits + Vercel function timeouts during ingestion | Technical | Chunked on-demand pulls, backoff, aggressive caching; move ingestion to a worker if needed |
 | **B5** | No official Premier metadata API (standings/schedule/rosters) | Data gap | Reconstruct team/opponent context from match data (already the chosen approach) |
@@ -138,13 +167,15 @@ If approval lands mid-build, P2 is a small merge. If it's denied, P1's quality i
 ## Where you (human) must steer
 
 1. **Phase 1 — the Riot application & demo.** The single highest-leverage human node; approval depends on the story you tell.
-2. **Legal copy** — privacy policy, ToS, consent/disclaimer wording.
-3. **Brand/name decision** (B-name) before you commit a domain/identity.
-4. **Map-asset commercial terms** sign-off (B3).
-5. **RSO rejection handling** — judgment call on re-scope if denied.
-6. **ZH terminology review** — needs a human who knows competitive Valorant in Chinese.
-7. **Final compliance/privacy review** before public exposure.
-8. **Public-beta go/no-go** + **freemium boundary** definition.
+2. **Opponent-feature framing** (B-scout) — decide how to present opponent review so it isn't "scouting"; legal sign-off. *Could be a denial reason if mishandled.*
+3. **Consent model** (B-consent) — per-player opt-in vs captain-only; decide in Phase 1, shapes the data model and copy.
+4. **Legal copy** — privacy policy, ToS, consent/disclaimer wording (must cover the opt-in disclaimer Riot requires).
+5. **Brand/name decision** (B-name) before you commit a domain/identity.
+6. **Map-asset commercial terms** sign-off (B3).
+7. **RSO rejection handling** — judgment call on re-scope if denied.
+8. **ZH terminology review** — needs a human who knows competitive Valorant in Chinese.
+9. **Final compliance/privacy review** before public exposure.
+10. **Public-beta go/no-go** + **freemium boundary** definition.
 
 ## Rough timeline (≈20 hrs/wk — estimates, not commitments)
 

@@ -58,7 +58,18 @@ Parser, analysis, UI, and tests are unchanged.
 
 ## Fidelity caveats (verify in Phase 1)
 
+DTO field names were validated (2026-06-05) against an official `val-match-v1` sample response —
+`puuid`, `queueId`, `gameTime`/`roundTime`, `playerLocations`, `victimLocation`, plant/defuse coords
+all match. ⚠️ Model against the **official developer API**, *not* the in-game **client API** that
+community docs (e.g. techchrism's valapidocs) describe — that one uses different names (`subject`,
+`queueID`, `timeSinceRoundStartMillis`).
+
 - Agent / weapon / armor / map UUIDs in `content/content-map.ts` are real published values but
   should be re-synced from `val-content-v1` once you have API access.
-- That Premier matches return via `matchlists/by-puuid` with `queueId: "premier"` and the
-  standard `MatchDto` is the day-1 validation task after RSO approval.
+- **Unverified (day-1 task after approval):** (a) that Premier matches surface via
+  `matchlists/by-puuid` at all, and (b) the Premier `queueId` value — the official sample shows
+  `"unrated"`; Premier's value is undocumented, so the fixtures' `queueId: "premier"` (and the
+  `queueId === "premier"` filter in the list route) is a provisional assumption.
+- **Policy constraints** (see `docs/plan/roadmap.md` — B-scout, B-consent): Riot prohibits pre-match
+  "scouting", and requires player opt-in to display stats. These shape the opponent feature and the
+  consent model — they are product/legal decisions, not code caveats.
