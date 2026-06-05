@@ -1,10 +1,11 @@
 import { readFile } from "node:fs/promises";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import type { MatchSource, MatchlistEntry } from "./index";
 import type { RiotMatchDto } from "./riot-dto";
 
-const FIXTURES = join(dirname(fileURLToPath(import.meta.url)), "..", "fixtures");
+// Resolved from the project root so the path survives Next.js server bundling
+// (import.meta.url would resolve into .next/ at runtime). Run node/CLI from the repo root.
+const FIXTURES = join(process.cwd(), "src", "fixtures");
 
 /**
  * Phase 0 implementation: serves authored fixtures behind the real interface.
