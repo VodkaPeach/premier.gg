@@ -2,10 +2,19 @@ import Link from "next/link";
 import { getMatchSource } from "@/lib/match-source";
 import { readManifest, matchSummary } from "@/lib/manifest";
 
+// Fetch per request, not at build. The mock is static, but a Phase-1 RiotMatchSource
+// fetches live — without this the matchlist would be frozen at build time, making the
+// seam swap more than a one-place change.
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const manifest = readManifest();
   const source = getMatchSource();
-  const entries = await source.getMatchlist(manifest.captainPuuid);
+  // The seam contract marks queueId for filtering; the real matchlist returns mixed
+  // queues, so keep only Premier (no-op on the all-premier mock, correct after swap).
+  const entries = (await source.getMatchlist(manifest.captainPuuid)).filter(
+    (e) => e.queueId === "premier",
+  );
 
   return (
     <main>
