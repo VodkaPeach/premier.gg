@@ -1,11 +1,12 @@
-// Invariants over a generated fixture. Run with: npx vitest (after `node docs/fixtures/generate.mjs`).
+// Invariants over a generated fixture. Run with: pnpm test (after `pnpm fixtures`).
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { parseMatch } from "../domain/parse-match";
-import type { RiotMatchDto } from "../match-source/riot-dto";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { parseMatch } from "../src/domain/parse-match";
+import type { RiotMatchDto } from "../src/match-source/riot-dto";
 
-const FIX = join(__dirname, "..", "fixtures");
+const FIX = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "fixtures");
 const load = (id: string): RiotMatchDto =>
   JSON.parse(readFileSync(join(FIX, "matches", `${id}.json`), "utf8"));
 
