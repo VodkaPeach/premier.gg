@@ -1,0 +1,119 @@
+{
+  "app": { "name": "premier.gg", "tagline": "Review your VALORANT Premier matches." },
+  "nav": {
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "publicProfile": "Public profile",
+    "signIn": "Sign in with Riot",
+    "demo": "demo"
+  },
+  "account": { "captain": "Captain", "team": "Mock Esports", "unlink": "Unlink" },
+  "footer": {
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "mockDemo": "Mock data demo — no live Riot data is used."
+  },
+  "landing": {
+    "pill": "Mock data demo",
+    "headline": "Review your VALORANT Premier matches",
+    "subhead": "Your team. Your opponents. Your positions. Turn every Premier match you play into clear, honest analytics.",
+    "ctaPrimary": "Sign in with Riot (demo)",
+    "ctaSecondary": "See the demo dashboard",
+    "features": {
+      "heading": "Built for the matches you play",
+      "analytics": {
+        "title": "Team & player analytics",
+        "body": "Win rate, form, K/D, plant and clutch trends across your roster — at a glance and over time."
+      },
+      "positional": {
+        "title": "Positional kill / plant maps",
+        "body": "See where rounds are won and lost. Kill locations, spike plants, and site control mapped per match."
+      },
+      "opponent": {
+        "title": "Opponent review",
+        "body": "Based on matches you've played — break down the teams you've already faced, round by round."
+      }
+    },
+    "trust": "We only ever show matches you've played — no opponent search, no lookup."
+  },
+  "connect": {
+    "title": "Connect your Riot account",
+    "intro": "Sign in once with Riot Sign-On. We read your own Premier match history — nothing else.",
+    "read": {
+      "label": "What we read",
+      "body": "Your own Premier match history, via Riot Sign-On."
+    },
+    "show": {
+      "label": "What we show",
+      "body": "Your team, and the opponents you've personally played — based on the matches you played in."
+    },
+    "how": {
+      "label": "How it works",
+      "body": "A single team captain signs in; we reconstruct the team from your matches. We never look up arbitrary players — there's no search."
+    },
+    "privacyLink": "Read our Privacy Policy",
+    "consent": "I agree to share my Premier match data per the Privacy Policy",
+    "consentHint": "Check the box to continue.",
+    "continue": "Continue"
+  },
+  "riot": {
+    "title": "Riot Sign On",
+    "mockBadge": "Mock",
+    "banner": "Simulated login — no real Riot credentials are used. This is a demo.",
+    "riotId": "Riot ID",
+    "password": "Password",
+    "fieldsNote": "These fields are inactive — the demo doesn't collect or send any credentials.",
+    "authorize": "Authorize (demo)",
+    "cancel": "Cancel"
+  },
+  "success": {
+    "badge": "Linked",
+    "title": "Account linked",
+    "summary": "Imported 5 Premier matches for Mock Esports.",
+    "subtext": "Your demo workspace is ready. Everything from here runs on mock data.",
+    "cta": "Go to dashboard"
+  },
+  "settings": {
+    "eyebrow": "Account settings",
+    "title": "Settings",
+    "subtitle": "Manage your linked account, your data, and your preferences.",
+    "account": {
+      "title": "Account",
+      "linked": "Linked Riot account",
+      "identity": "Captain · Mock Esports",
+      "note": "This demo links a single mock captain. Unlinking signs you out of the demo workspace.",
+      "unlink": "Unlink account"
+    },
+    "data": {
+      "title": "Your data",
+      "intro": "You're in control of what premier.gg stores.",
+      "explainer": "In the live product this permanently deletes your stored match data. In this demo it clears your linked session.",
+      "delete": "Delete my data",
+      "confirmTitle": "Delete my data?",
+      "confirmBody": "In the live product this permanently deletes your stored match data. In this demo it clears your linked session.",
+      "confirm": "Yes, delete my data",
+      "cancel": "Cancel"
+    },
+    "language": {
+      "title": "Language",
+      "intro": "Choose the language for your workspace.",
+      "english": "English",
+      "chinese": "中文 (coming soon)",
+      "chineseTitle": "Chinese coming soon"
+    }
+  },
+  "team": {
+    "eyebrow": "Premier · public profile",
+    "winRate": "Win rate",
+    "record": "Record",
+    "matches": "Matches",
+    "mapPool": "Map pool",
+    "noMaps": "No maps played yet.",
+    "opponents": "Opponents faced",
+    "opponentLine": "vs {name} — based on {count} match(es) you played",
+    "opponentRecord": "{wins}W · {losses}L",
+    "framing": "premier.gg only shows opponents from matches this team actually played — no scouting, no player search.",
+    "notFound": "Team not found"
+  },
+  "disclaimer": "premier.gg isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties."
+}
