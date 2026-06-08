@@ -6,14 +6,14 @@
  */
 
 const rect = {
-  fill: "var(--surface-2)",
-  stroke: "var(--border)",
+  fill: "rgb(var(--surface-2))",
+  stroke: "rgb(var(--border))",
   strokeWidth: 0.4,
   rx: 2,
 } as const;
 
 const labelProps = {
-  fill: "var(--muted)",
+  fill: "rgb(var(--muted))",
   fontSize: 6,
   fontWeight: 600,
   textAnchor: "middle" as const,
@@ -68,7 +68,7 @@ function Lanes({ lanes }: { lanes: Lane[] }) {
           y1={l.from[1]}
           x2={l.to[0]}
           y2={l.to[1]}
-          stroke="var(--border)"
+          stroke="rgb(var(--border))"
           strokeWidth={2.6}
           strokeLinecap="round"
           opacity={0.5}
@@ -85,10 +85,10 @@ function CenterMark({ x = 50, y = 50 }: { x?: number; y?: number }) {
       <path
         d={`M ${x} ${y - 2.4} L ${x + 2.4} ${y} L ${x} ${y + 2.4} L ${x - 2.4} ${y} Z`}
         fill="none"
-        stroke="var(--border)"
+        stroke="rgb(var(--border))"
         strokeWidth={0.5}
       />
-      <circle cx={x} cy={y} r={0.5} fill="var(--border)" />
+      <circle cx={x} cy={y} r={0.5} fill="rgb(var(--border))" />
     </g>
   );
 }

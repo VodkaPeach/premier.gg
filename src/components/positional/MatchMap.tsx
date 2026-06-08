@@ -42,9 +42,9 @@ const PHASE_SEGMENTS: { value: PhaseFilter; label: string }[] = [
 ];
 
 const KIND_CHIPS: { kind: Kind; label: string; dot: string }[] = [
-  { kind: "kill", label: "Kills", dot: "var(--loss)" },
-  { kind: "plant", label: "Plants", dot: "var(--accent)" },
-  { kind: "defuse", label: "Defuses", dot: "var(--win)" },
+  { kind: "kill", label: "Kills", dot: "rgb(var(--loss))" },
+  { kind: "plant", label: "Plants", dot: "rgb(var(--accent))" },
+  { kind: "defuse", label: "Defuses", dot: "rgb(var(--win))" },
 ];
 
 export default function MatchMap({
@@ -133,7 +133,7 @@ export default function MatchMap({
               cx={p.nx * 100}
               cy={p.ny * 100}
               r={1.3}
-              fill="var(--loss)"
+              fill="rgb(var(--loss))"
               fillOpacity={0.85}
             />
           ))}
@@ -164,21 +164,21 @@ export default function MatchMap({
         <span className="flex items-center gap-1.5 text-fg">
           <span
             className="inline-block h-2 w-2 rounded-full"
-            style={{ backgroundColor: "var(--loss)" }}
+            style={{ backgroundColor: "rgb(var(--loss))" }}
           />
           Kill
         </span>
         <span className="flex items-center gap-1.5 text-fg">
           <span
             className="inline-block h-2.5 w-2.5 rotate-45 rounded-[1px] ring-1 ring-white/40"
-            style={{ backgroundColor: "var(--accent)" }}
+            style={{ backgroundColor: "rgb(var(--accent))" }}
           />
           Plant
         </span>
         <span className="flex items-center gap-1.5 text-fg">
           <span
             className="inline-block h-2.5 w-2.5 rounded-full border-2"
-            style={{ borderColor: "var(--win)" }}
+            style={{ borderColor: "rgb(var(--win))" }}
           />
           Defuse
         </span>
@@ -256,7 +256,7 @@ function Segmented<T extends string>({
               onClick={() => onChange(s.value)}
               className={`rounded-md px-2.5 py-1 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-accent/20 text-fg shadow-[inset_0_0_0_1px_var(--accent)]"
+                  ? "bg-accent/20 text-fg shadow-[inset_0_0_0_1px_rgb(var(--accent))]"
                   : "text-muted hover:text-fg"
               }`}
             >
@@ -283,7 +283,7 @@ function PlantMarker({ x, y }: { x: number; y: number }) {
         strokeWidth={0.5}
         opacity={0.7}
       />
-      <path d={diamond} fill="var(--accent)" stroke="var(--bg)" strokeWidth={0.4} />
+      <path d={diamond} fill="rgb(var(--accent))" stroke="rgb(var(--bg))" strokeWidth={0.4} />
     </g>
   );
 }
@@ -297,9 +297,9 @@ function DefuseMarker({ x, y }: { x: number; y: number }) {
         cx={x}
         cy={y}
         r={2.2}
-        fill="var(--bg)"
+        fill="rgb(var(--bg))"
         fillOpacity={0.35}
-        stroke="var(--win)"
+        stroke="rgb(var(--win))"
         strokeWidth={0.9}
       />
     </g>

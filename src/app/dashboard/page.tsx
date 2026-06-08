@@ -56,7 +56,7 @@ export default async function DashboardPage() {
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05]"
             style={{
               backgroundImage:
-                "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+                "linear-gradient(rgb(var(--border)) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--border)) 1px, transparent 1px)",
               backgroundSize: "40px 40px",
               maskImage:
                 "radial-gradient(46rem 22rem at 80% 0%, black, transparent 80%)",

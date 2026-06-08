@@ -14,7 +14,7 @@ export default function Donut({ value, label }: { value: number; label: string }
             cy="50"
             r={r}
             fill="none"
-            stroke="var(--surface-2)"
+            stroke="rgb(var(--surface-2))"
             strokeWidth="10"
           />
           <circle
@@ -22,7 +22,7 @@ export default function Donut({ value, label }: { value: number; label: string }
             cy="50"
             r={r}
             fill="none"
-            stroke="var(--accent)"
+            stroke="rgb(var(--accent))"
             strokeWidth="10"
             strokeDasharray={`${filled} ${gap}`}
             strokeLinecap="round"
