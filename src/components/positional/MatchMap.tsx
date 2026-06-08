@@ -1,16 +1,18 @@
 "use client";
 
-import { useId, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import type { EventPoint } from "@/analytics/match";
 import { Backdrop } from "./backdrops";
 
 /* ──────────────────────────────────────────────────────────────────────────
- * Filterable positional heatmap.
+ * Filterable positional event map.
  *
- * Kills are rendered as an additive SVG-blur density field (red hot-zones);
- * plants and defuses are crisp markers layered on top. Three filter axes —
- * event type, team (by point.side), and match phase (derived from round) —
- * narrow the rendered set. Pure client component; same export + props as before.
+ * Every event is a discrete, distinct marker — never a blurred density field —
+ * so kills, plants and defuses stay individually legible by both colour and
+ * shape: red dots (kills), violet diamonds (plants), green rings (defuses).
+ * Three filter axes — event type, team (by point.side), and match phase
+ * (derived from round) — narrow the rendered set. Pure client component; same
+ * export + props as before.
  * ────────────────────────────────────────────────────────────────────────── */
 
 type Kind = EventPoint["kind"];
@@ -55,11 +57,6 @@ export default function MatchMap({
   const [enabled, setEnabled] = useState<Record<Kind, boolean>>(KILL_DEFAULTS);
   const [team, setTeam] = useState<TeamFilter>("all");
   const [phase, setPhase] = useState<PhaseFilter>("all");
-
-  // Stable, unique filter ids so multiple maps on a page never collide.
-  const uid = useId().replace(/[:]/g, "");
-  const heatId = `heat-${uid}`;
-  const glowId = `glow-${uid}`;
 
   const matchesTeamPhase = useMemo(() => {
     return (p: EventPoint) => {
@@ -123,57 +120,30 @@ export default function MatchMap({
           viewBox="0 0 100 100"
           className="h-full w-full"
           role="img"
-          aria-label={`Event-point heatmap for ${map}`}
+          aria-label={`Event-point map for ${map}`}
         >
-          <defs>
-            {/* Wide blur builds soft density from overlapping kill blobs. */}
-            <filter id={heatId} x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" />
-            </filter>
-            {/* Tighter blur adds intensity to the hottest cores. */}
-            <filter id={glowId} x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="1.6" />
-            </filter>
-          </defs>
-
           <Backdrop map={map} />
 
-          {/* Kill heat — additive translucent circles under two blur passes. */}
-          {kills.length > 0 && (
-            <>
-              <g filter={`url(#${heatId})`}>
-                {kills.map((p, i) => (
-                  <circle
-                    key={`hk-${i}`}
-                    cx={p.nx * 100}
-                    cy={p.ny * 100}
-                    r={4}
-                    fill="var(--loss)"
-                    opacity={0.22}
-                  />
-                ))}
-              </g>
-              <g filter={`url(#${glowId})`}>
-                {kills.map((p, i) => (
-                  <circle
-                    key={`gk-${i}`}
-                    cx={p.nx * 100}
-                    cy={p.ny * 100}
-                    r={2}
-                    fill="var(--loss)"
-                    opacity={0.3}
-                  />
-                ))}
-              </g>
-            </>
-          )}
+          {/* Draw kills first (underneath) so the sparse, important plant and
+              defuse markers always sit on top and are never occluded. */}
+          {/* Kills — small solid red dots; discrete even where they overlap. */}
+          {kills.map((p, i) => (
+            <circle
+              key={`kl-${i}`}
+              cx={p.nx * 100}
+              cy={p.ny * 100}
+              r={1.3}
+              fill="var(--loss)"
+              fillOpacity={0.85}
+            />
+          ))}
 
-          {/* Plants — accent diamond with a thin halo. */}
+          {/* Plants — accent (violet) diamond with a lighter halo. */}
           {plants.map((p, i) => (
             <PlantMarker key={`pl-${i}`} x={p.nx * 100} y={p.ny * 100} />
           ))}
 
-          {/* Defuses — win-green dot with a halo. */}
+          {/* Defuses — win-green ring with a halo. */}
           {defuses.map((p, i) => (
             <DefuseMarker key={`df-${i}`} x={p.nx * 100} y={p.ny * 100} />
           ))}
@@ -193,32 +163,29 @@ export default function MatchMap({
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
         <span className="flex items-center gap-1.5 text-fg">
           <span
-            className="inline-block h-2.5 w-4 rounded-full"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(248,113,113,0.15), var(--loss))",
-            }}
+            className="inline-block h-2 w-2 rounded-full"
+            style={{ backgroundColor: "var(--loss)" }}
           />
-          Kill heat
+          Kill
         </span>
         <span className="flex items-center gap-1.5 text-fg">
           <span
-            className="inline-block h-2.5 w-2.5 rotate-45 rounded-[1px]"
+            className="inline-block h-2.5 w-2.5 rotate-45 rounded-[1px] ring-1 ring-white/40"
             style={{ backgroundColor: "var(--accent)" }}
           />
           Plant
         </span>
         <span className="flex items-center gap-1.5 text-fg">
           <span
-            className="inline-block h-2.5 w-2.5 rounded-full"
-            style={{ backgroundColor: "var(--win)" }}
+            className="inline-block h-2.5 w-2.5 rounded-full border-2"
+            style={{ borderColor: "var(--win)" }}
           />
           Defuse
         </span>
       </div>
 
       <figcaption className="text-sm text-muted">
-        Event points (kills/plants), not continuous movement.
+        Event points (kills/plants/defuses), not continuous movement.
       </figcaption>
     </figure>
   );
@@ -302,26 +269,39 @@ function Segmented<T extends string>({
   );
 }
 
+/** Plant — violet diamond (rotated square) with a thin lighter halo. */
 function PlantMarker({ x, y }: { x: number; y: number }) {
-  const r = 1.9;
+  const r = 2.2;
+  const diamond = `M ${x} ${y - r} L ${x + r} ${y} L ${x} ${y + r} L ${x - r} ${y} Z`;
   return (
     <g>
-      <circle cx={x} cy={y} r={r + 1.1} fill="none" stroke="var(--accent)" strokeWidth={0.4} opacity={0.55} />
+      {/* Lighter outer halo so the diamond pops off the backdrop. */}
       <path
-        d={`M ${x} ${y - r} L ${x + r} ${y} L ${x} ${y + r} L ${x - r} ${y} Z`}
-        fill="var(--accent)"
-        stroke="var(--bg)"
-        strokeWidth={0.3}
+        d={`M ${x} ${y - (r + 1)} L ${x + (r + 1)} ${y} L ${x} ${y + (r + 1)} L ${x - (r + 1)} ${y} Z`}
+        fill="none"
+        stroke="#c4b5ff"
+        strokeWidth={0.5}
+        opacity={0.7}
       />
+      <path d={diamond} fill="var(--accent)" stroke="var(--bg)" strokeWidth={0.4} />
     </g>
   );
 }
 
+/** Defuse — hollow win-green ring with a halo; distinct from kill dot + plant. */
 function DefuseMarker({ x, y }: { x: number; y: number }) {
   return (
     <g>
-      <circle cx={x} cy={y} r={2.9} fill="none" stroke="var(--win)" strokeWidth={0.4} opacity={0.55} />
-      <circle cx={x} cy={y} r={1.7} fill="var(--win)" stroke="var(--bg)" strokeWidth={0.3} />
+      <circle cx={x} cy={y} r={3} fill="none" stroke="#a7f3c8" strokeWidth={0.5} opacity={0.6} />
+      <circle
+        cx={x}
+        cy={y}
+        r={2.2}
+        fill="var(--bg)"
+        fillOpacity={0.35}
+        stroke="var(--win)"
+        strokeWidth={0.9}
+      />
     </g>
   );
 }

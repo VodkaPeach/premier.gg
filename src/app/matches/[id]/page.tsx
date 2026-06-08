@@ -30,6 +30,10 @@ export default async function MatchPage({
   const redScore = match.teams.Red.roundsWon;
   const timeline = roundTimeline(match);
 
+  // Surface the underlying spike data as plain counts in the meta line.
+  const plants = match.rounds.filter((r) => r.plant).length;
+  const defuses = match.rounds.filter((r) => r.defuse).length;
+
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
@@ -85,7 +89,8 @@ export default async function MatchPage({
                   </span>
                 </h1>
                 <p className="mt-2 text-sm text-muted">
-                  {match.rounds.length} rounds · patch {match.patch}
+                  {match.rounds.length} rounds · {plants} plants · {defuses}{" "}
+                  defuses · patch {match.patch}
                 </p>
               </div>
 
@@ -107,7 +112,10 @@ export default async function MatchPage({
             ))}
           </div>
 
-          {/* Round timeline */}
+          {/* Round timeline — conveys ONLY which side won each round.
+              Spike plant/defuse positions live on the positional map below, not
+              here. Full VALORANT round-outcome categorization (elimination /
+              detonate / defuse / time-expiry) is a Phase-3 item. */}
           <Card title="Round timeline">
             <div className="space-y-4">
               <div className="flex flex-wrap gap-1.5">
@@ -117,53 +125,27 @@ export default async function MatchPage({
                     <div
                       key={r.num}
                       title={`Round ${r.num} · ${r.winner} won · ${r.outcome}`}
-                      className={`relative grid h-11 w-9 place-items-center rounded-md border text-sm font-medium tabular-nums transition-colors ${
+                      className={`grid h-11 w-9 place-items-center rounded-md border text-sm font-medium tabular-nums transition-colors ${
                         blueWon
-                          ? "border-accent/60 bg-accent/30 text-fg"
-                          : "border-loss/60 bg-loss/25 text-fg"
+                          ? "border-accent/70 bg-accent/40 text-fg"
+                          : "border-loss/70 bg-loss/35 text-fg"
                       }`}
                     >
                       <span className="font-display">{r.num}</span>
-                      {(r.hasPlant || r.hasDefuse) && (
-                        <span className="absolute bottom-1 flex items-center gap-0.5">
-                          {r.hasPlant && (
-                            <span
-                              aria-hidden
-                              title="Spike planted"
-                              className="block h-1.5 w-1.5 rounded-full bg-accent"
-                            />
-                          )}
-                          {r.hasDefuse && (
-                            <span
-                              aria-hidden
-                              title="Spike defused"
-                              className="block h-1.5 w-1.5 rounded-full bg-win"
-                            />
-                          )}
-                        </span>
-                      )}
                     </div>
                   );
                 })}
               </div>
 
-              {/* Legend */}
+              {/* Legend — winning side only. */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-sm text-muted">
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/60 bg-accent/30" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/70 bg-accent/40" />
                   Blue round
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/60 bg-loss/25" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/70 bg-loss/35" />
                   Red round
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="block h-1.5 w-1.5 rounded-full bg-accent" />
-                  Plant
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="block h-1.5 w-1.5 rounded-full bg-win" />
-                  Defuse
                 </span>
               </div>
             </div>
