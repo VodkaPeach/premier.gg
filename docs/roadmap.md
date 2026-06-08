@@ -100,11 +100,10 @@ lookup in any later phase.
 - Done: Next.js app (TS, ESLint, vitest) scaffolded; seam promoted `docs/` → `src/`; `getMatchSource()` factory (the single swap point); match list (`/`) + detail (`/matches/[id]`) routes render parsed fixtures. CI and Prisma deliberately **deferred** (no DB read until P2).
 - **Exit met:** `dev` boots, 8 tests green, pages render a parsed fixture.
 
-### Phase 1 — Prototype shell + public demo + submit application · **M** · 🎯 **M2** · 👤👤
+### Phase 1 — Prototype shell + public demo + submit application · **M** · 🎯 **M2** · 👤👤 · 🟡 **demo built; awaiting deploy + submit**
 **Goal:** deployed clickable demo (mock data) showing the full user flow, and the production + RSO application **submitted** (starts the clock).
-- Screens 1–8 (landing, consent/opt-in, simulated RSO, link success, mock dashboard, mock match detail, settings w/ unlink+delete, public profile).
-- EN/ZH skeleton, Privacy Policy + ToS, "not endorsed by Riot" notice, deploy to Vercel.
-- Write application answers + a 60-sec flow walkthrough; submit.
+- ✅ **Built & merged to `main`** (2026-06-08): screens 1–8 (landing, consent/opt-in, simulated RSO, link success, dashboard, match detail w/ **filterable positional map**, settings w/ unlink+delete, public profile) in a dark "modern analytics" theme; representative analytics computed from fixtures; draft Privacy Policy + ToS (marked "DRAFT — needs legal review"); "not endorsed by Riot" notice; application answers + 60-sec walkthrough drafted (`docs/application/`). **i18n = EN-only, i18n-ready** (ZH deferred to Phase 6 — a trim from the original "EN/ZH skeleton").
+- ⏳ **Remaining for the M2 exit (human-only):** push to origin; **deploy to Vercel** (`docs/deploy.md`, `MATCH_SOURCE=mock`); fill the `[demo URL]` / `[contact email]` placeholders in `docs/application/*` + the legal pages; **submit** the production + RSO application. Optionally send `docs/riot-dev-rel-inquiry.md` first.
 - 👤 **The reviewer-facing demo + narrative — approval hinges on this.** Make the **not-a-scouting-tool** case explicitly: own-history-only, no player/team search, co-played-only (see B-scout defense). 👤 Privacy/ToS/**consent** copy (legal) — reflect the **single-captain** model + required opt-in disclaimer (B-consent). 👤 **Name: premier.gg (confirm-first)** — confirm acceptability with Riot Developer Relations / a trademark check, ship independent branding + disclaimer, and don't hard-commit the brand until the key is approved (B-name).
 - **Exit:** demo is public, application is in Riot's queue.
 
@@ -165,7 +164,7 @@ lookup in any later phase.
 | ID | Milestone | Gates |
 |---|---|---|
 | M1 | Seam + fixtures complete | ✅ done |
-| M2 | Public mock demo live + application submitted | starts approval clock |
+| M2 | Public mock demo live + application submitted | 🟡 demo built & merged; needs Vercel deploy + submission (human) — starts approval clock |
 | M3 | **RSO approved + first real Premier match ingested** | unblocks real-data product |
 | M4 | Player + team analytics complete | core value proven |
 | M5 | Positional / heatmaps live | the rib.gg-style differentiator |

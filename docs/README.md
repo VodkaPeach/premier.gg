@@ -43,6 +43,12 @@ Plus a public profile at `/team/mock-esports` and legal pages at `/privacy` and 
   `next-intl` (strings live in `src/i18n/en.json`).
 - **Analytics:** every stat shown is computed from fixtures by `src/analytics/` (team, player,
   match), keeping the UI free of derivation logic.
+- **Positional view:** the match-detail map plots kill/plant/defuse points (via the
+  `geo/calibration` world→minimap transform) on a neutral, original backdrop — **not** a Riot
+  asset — with filters for event type / team / phase. Discrete distinct markers, not a heatmap.
+- **Theming note:** theme colors are RGB channel triplets in `src/app/globals.css`
+  (`--accent: 124 92 255`) so Tailwind `/opacity` utilities work; use them inline as
+  `rgb(var(--x))`. Do not switch them to hex — that silently breaks every `bg-accent/40`-style tint.
 
 See `docs/deploy.md` for deploying this demo, and `docs/application/` for the Riot application
 materials (answers + walkthrough script).
