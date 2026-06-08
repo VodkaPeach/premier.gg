@@ -211,7 +211,7 @@ function buildMatch(plan, index) {
     // plant / defuse
     let plantSite = "", bombPlanter = null, plantRoundTime = 0, plantLocation = { x: 0, y: 0 }, plantPlayerLocations = null;
     let bombDefuser = null, defuseRoundTime = 0, defuseLocation = { x: 0, y: 0 }, defusePlayerLocations = null;
-    const didPlant = chance(0.6) && alive[attackingSide].length > 0;
+    const didPlant = chance(0.72) && alive[attackingSide].length > 0;
     if (didPlant) {
       plantSite = pick(SITES[map]);
       bombPlanter = pick(sideOfTeam[attackingSide].map((p) => p.puuid));
@@ -219,7 +219,7 @@ function buildMatch(plan, index) {
       plantLocation = locAt(map, plantSite, 0.05);
       plantPlayerLocations = shuffle([...alive.Blue, ...alive.Red]).slice(0, ri(2, 4))
         .map((p) => ({ puuid: p, viewRadians: +(rnd() * 6.283).toFixed(3), location: locAt(map, plantSite, 0.18) }));
-      if (winner === defendingSide && chance(0.45) && alive[defendingSide].length > 0) {
+      if (winner === defendingSide && chance(0.9) && alive[defendingSide].length > 0) {
         bombDefuser = pick(sideOfTeam[defendingSide].map((p) => p.puuid));
         defuseRoundTime = plantRoundTime + ri(3000, 25000);
         defuseLocation = locAt(map, plantSite, 0.05);

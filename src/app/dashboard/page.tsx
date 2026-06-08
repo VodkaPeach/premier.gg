@@ -145,8 +145,8 @@ export default async function DashboardPage() {
               )}
             </Card>
 
-            <Card title="Attack vs defense" className="lg:col-span-2">
-              <div className="flex h-full flex-col justify-between gap-5">
+            <Card title="Attack vs defense" className="lg:col-span-2 lg:self-start">
+              <div className="flex flex-col gap-5">
                 <div className="flex items-center justify-around gap-4">
                   <Donut value={split.atkWinRate} label="Attack" />
                   <Donut value={split.defWinRate} label="Defense" />

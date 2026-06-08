@@ -119,8 +119,8 @@ export default async function MatchPage({
                       title={`Round ${r.num} · ${r.winner} won · ${r.outcome}`}
                       className={`relative grid h-11 w-9 place-items-center rounded-md border text-xs font-medium tabular-nums transition-colors ${
                         blueWon
-                          ? "border-accent/40 bg-accent/15 text-fg"
-                          : "border-loss/40 bg-loss/10 text-fg"
+                          ? "border-accent/60 bg-accent/30 text-fg"
+                          : "border-loss/60 bg-loss/25 text-fg"
                       }`}
                     >
                       <span className="font-display">{r.num}</span>
@@ -150,11 +150,11 @@ export default async function MatchPage({
               {/* Legend */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-xs text-muted">
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/40 bg-accent/15" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/60 bg-accent/30" />
                   Blue round
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/40 bg-loss/10" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/60 bg-loss/25" />
                   Red round
                 </span>
                 <span className="flex items-center gap-1.5">
