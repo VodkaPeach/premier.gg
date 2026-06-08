@@ -26,7 +26,7 @@ export default function RiotSignOnPage() {
             <h3 className="font-display text-base font-semibold tracking-wide text-fg">
               {t("title")}
             </h3>
-            <span className="rounded border border-accent/40 bg-accent-soft px-1.5 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-accent">
+            <span className="rounded border border-accent/40 bg-accent-soft px-1.5 py-0.5 text-sm font-semibold uppercase tracking-wide text-accent">
               {t("mockBadge")}
             </span>
           </div>
@@ -36,13 +36,13 @@ export default function RiotSignOnPage() {
             <span aria-hidden className="mt-0.5 text-accent">
               ⚠
             </span>
-            <p className="text-sm leading-relaxed text-fg">{t("banner")}</p>
+            <p className="text-base leading-relaxed text-fg">{t("banner")}</p>
           </div>
 
           {/* Faux credential fields — purely visual, disabled. */}
           <div className="mt-5 space-y-3" aria-hidden>
             <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-muted">
+              <span className="text-sm font-medium uppercase tracking-wide text-muted">
                 {t("riotId")}
               </span>
               <input
@@ -54,7 +54,7 @@ export default function RiotSignOnPage() {
               />
             </label>
             <label className="block">
-              <span className="text-xs font-medium uppercase tracking-wide text-muted">
+              <span className="text-sm font-medium uppercase tracking-wide text-muted">
                 {t("password")}
               </span>
               <input
@@ -67,7 +67,7 @@ export default function RiotSignOnPage() {
             </label>
           </div>
 
-          <p className="mt-2 text-xs leading-relaxed text-muted/80">
+          <p className="mt-2 text-sm leading-relaxed text-muted/80">
             {t("fieldsNote")}
           </p>
 

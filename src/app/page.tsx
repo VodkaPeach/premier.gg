@@ -35,7 +35,7 @@ export default function HomePage() {
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]"
             style={{
               backgroundImage:
-                "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+                "linear-gradient(rgb(var(--border)) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--border)) 1px, transparent 1px)",
               backgroundSize: "44px 44px",
               maskImage:
                 "radial-gradient(60rem 40rem at 60% 0%, black, transparent 75%)",
@@ -45,7 +45,7 @@ export default function HomePage() {
           />
 
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft/60 px-3 py-1 text-xs font-medium text-accent">
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft/60 px-3 py-1 text-sm font-medium text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               {t("pill")}
             </span>

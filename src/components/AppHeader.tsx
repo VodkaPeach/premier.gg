@@ -37,7 +37,7 @@ export default function AppHeader() {
           <div className="flex items-center gap-2 rounded-md border border-border bg-surface px-3 py-1.5">
             <span
               aria-hidden
-              className="grid h-6 w-6 place-items-center rounded-full bg-accent-soft font-display text-xs font-semibold text-accent"
+              className="grid h-6 w-6 place-items-center rounded-full bg-accent-soft font-display text-sm font-semibold text-accent"
             >
               ME
             </span>

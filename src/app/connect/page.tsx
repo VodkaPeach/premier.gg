@@ -31,7 +31,7 @@ export default function ConnectPage() {
         />
 
         <Card title={t("title")} className="w-full max-w-lg p-6">
-          <p className="text-sm leading-relaxed text-muted">{t("intro")}</p>
+          <p className="text-base leading-relaxed text-muted">{t("intro")}</p>
 
           <dl className="mt-5 space-y-3">
             {POINTS.map((key) => (

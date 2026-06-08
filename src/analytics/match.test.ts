@@ -23,4 +23,9 @@ describe("match analytics", () => {
       expect(p.ny).toBeGreaterThanOrEqual(0); expect(p.ny).toBeLessThanOrEqual(1);
     }
   });
+  it("kills carry the killing team's side", () => {
+    const kills = eventPoints(m1).filter((p) => p.kind === "kill");
+    expect(kills.length).toBeGreaterThan(0);
+    expect(kills.every((k) => k.side === "Blue" || k.side === "Red")).toBe(true);
+  });
 });

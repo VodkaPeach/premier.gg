@@ -44,7 +44,7 @@ export default function LegalPage({
           >
             <span
               aria-hidden
-              className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-accent/20 text-[0.7rem] font-bold text-accent"
+              className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-accent/20 text-sm font-bold text-accent"
             >
               !
             </span>
@@ -61,7 +61,7 @@ export default function LegalPage({
           </div>
 
           <header className="mt-10">
-            <p className="font-display text-xs font-medium uppercase tracking-[0.18em] text-muted">
+            <p className="font-display text-sm font-medium uppercase tracking-[0.18em] text-muted">
               {eyebrow}
             </p>
             <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -95,7 +95,7 @@ export function LegalSection({
         <span className="text-sm font-medium text-accent">{n}.</span>
         {title}
       </h2>
-      <div className="mt-3 space-y-3 text-[0.95rem] leading-relaxed text-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-medium [&_strong]:text-fg">
+      <div className="mt-3 space-y-3 text-base leading-relaxed text-muted [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-medium [&_strong]:text-fg">
         {children}
       </div>
     </section>

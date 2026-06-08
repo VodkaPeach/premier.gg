@@ -30,6 +30,10 @@ export default async function MatchPage({
   const redScore = match.teams.Red.roundsWon;
   const timeline = roundTimeline(match);
 
+  // Surface the underlying spike data as plain counts in the meta line.
+  const plants = match.rounds.filter((r) => r.plant).length;
+  const defuses = match.rounds.filter((r) => r.defuse).length;
+
   return (
     <div className="flex min-h-screen flex-col">
       <AppHeader />
@@ -50,7 +54,7 @@ export default async function MatchPage({
             className="pointer-events-none absolute inset-0 -z-10 opacity-[0.05]"
             style={{
               backgroundImage:
-                "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
+                "linear-gradient(rgb(var(--border)) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--border)) 1px, transparent 1px)",
               backgroundSize: "40px 40px",
               maskImage:
                 "radial-gradient(46rem 22rem at 20% 0%, black, transparent 80%)",
@@ -75,7 +79,7 @@ export default async function MatchPage({
 
             <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted">
+                <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
                   Match detail
                 </p>
                 <h1 className="mt-2 flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -85,7 +89,8 @@ export default async function MatchPage({
                   </span>
                 </h1>
                 <p className="mt-2 text-sm text-muted">
-                  {match.rounds.length} rounds · patch {match.patch}
+                  {match.rounds.length} rounds · {plants} plants · {defuses}{" "}
+                  defuses · patch {match.patch}
                 </p>
               </div>
 
@@ -107,7 +112,10 @@ export default async function MatchPage({
             ))}
           </div>
 
-          {/* Round timeline */}
+          {/* Round timeline — conveys ONLY which side won each round.
+              Spike plant/defuse positions live on the positional map below, not
+              here. Full VALORANT round-outcome categorization (elimination /
+              detonate / defuse / time-expiry) is a Phase-3 item. */}
           <Card title="Round timeline">
             <div className="space-y-4">
               <div className="flex flex-wrap gap-1.5">
@@ -117,53 +125,27 @@ export default async function MatchPage({
                     <div
                       key={r.num}
                       title={`Round ${r.num} · ${r.winner} won · ${r.outcome}`}
-                      className={`relative grid h-11 w-9 place-items-center rounded-md border text-xs font-medium tabular-nums transition-colors ${
+                      className={`grid h-11 w-9 place-items-center rounded-md border text-sm font-medium tabular-nums transition-colors ${
                         blueWon
-                          ? "border-accent/40 bg-accent/15 text-fg"
-                          : "border-loss/40 bg-loss/10 text-fg"
+                          ? "border-accent/70 bg-accent/40 text-fg"
+                          : "border-loss/70 bg-loss/35 text-fg"
                       }`}
                     >
                       <span className="font-display">{r.num}</span>
-                      {(r.hasPlant || r.hasDefuse) && (
-                        <span className="absolute bottom-1 flex items-center gap-0.5">
-                          {r.hasPlant && (
-                            <span
-                              aria-hidden
-                              title="Spike planted"
-                              className="block h-1.5 w-1.5 rounded-full bg-accent"
-                            />
-                          )}
-                          {r.hasDefuse && (
-                            <span
-                              aria-hidden
-                              title="Spike defused"
-                              className="block h-1.5 w-1.5 rounded-full bg-win"
-                            />
-                          )}
-                        </span>
-                      )}
                     </div>
                   );
                 })}
               </div>
 
-              {/* Legend */}
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-xs text-muted">
+              {/* Legend — winning side only. */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-sm text-muted">
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/40 bg-accent/15" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-accent/70 bg-accent/40" />
                   Blue round
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/40 bg-loss/10" />
+                  <span className="block h-2.5 w-2.5 rounded-sm border border-loss/70 bg-loss/35" />
                   Red round
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="block h-1.5 w-1.5 rounded-full bg-accent" />
-                  Plant
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="block h-1.5 w-1.5 rounded-full bg-win" />
-                  Defuse
                 </span>
               </div>
             </div>
@@ -204,7 +186,7 @@ function ScorePill({
       >
         {score}
       </span>
-      <span className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
         {side}
         {won ? " · W" : ""}
       </span>
@@ -233,7 +215,7 @@ function Scoreboard({
           </span>
           {side}
           {won ? (
-            <span className="rounded border border-win/40 bg-win/10 px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-win">
+            <span className="rounded border border-win/40 bg-win/10 px-1.5 py-0.5 text-sm font-semibold uppercase tracking-wide text-win">
               Won
             </span>
           ) : null}
@@ -247,7 +229,7 @@ function Scoreboard({
       <div className="-mx-1 overflow-x-auto">
         <table className="w-full min-w-[30rem] border-collapse text-sm">
           <thead>
-            <tr className="border-b border-border text-left text-[0.7rem] uppercase tracking-[0.12em] text-muted">
+            <tr className="border-b border-border text-left text-sm uppercase tracking-[0.12em] text-muted">
               <th className="px-1 pb-2 font-medium">Player</th>
               <th className="px-1 pb-2 font-medium">Agent</th>
               <th className="px-1 pb-2 text-right font-medium">K</th>
