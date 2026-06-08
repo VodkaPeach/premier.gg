@@ -4,6 +4,8 @@ import { getMatchSource } from "@/lib/match-source";
 import { readManifest } from "@/lib/manifest";
 import { parseMatch } from "@/domain/parse-match";
 import { teamSummary, mapPool } from "@/analytics/team";
+import { isLinked } from "@/lib/auth";
+import AppHeader from "@/components/AppHeader";
 import MarketingHeader from "@/components/MarketingHeader";
 import Footer from "@/components/Footer";
 import Card from "@/components/Card";
@@ -46,6 +48,9 @@ export default async function TeamProfilePage({
   const { slug } = await params;
   if (slug !== PUBLIC_SLUG) notFound();
 
+  // Public page, but adapt the chrome: signed-in users keep the full app nav so
+  // they aren't stranded here; logged-out visitors get the marketing header.
+  const linked = await isLinked();
   const t = await getTranslations("team");
 
   const manifest = readManifest();
@@ -65,7 +70,7 @@ export default async function TeamProfilePage({
 
   return (
     <div className="flex min-h-screen flex-col">
-      <MarketingHeader />
+      {linked ? <AppHeader /> : <MarketingHeader />}
 
       <main className="flex-1">
         {/* Team header band */}
