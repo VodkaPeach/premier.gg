@@ -18,7 +18,7 @@ export default function Footer() {
           <Link href="/terms" className="transition-colors hover:text-fg">
             {t("footer.terms")}
           </Link>
-          <span className="ml-auto rounded border border-border bg-surface px-2 py-0.5 text-xs text-muted">
+          <span className="ml-auto rounded border border-border bg-surface px-2 py-0.5 text-sm text-muted">
             {t("footer.mockDemo")}
           </span>
         </div>

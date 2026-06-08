@@ -67,7 +67,7 @@ export default async function DashboardPage() {
 
           <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 py-9 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted">
+              <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
                 Team dashboard
               </p>
               <h1 className="mt-2 flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -89,7 +89,7 @@ export default async function DashboardPage() {
             </div>
 
             <div className="flex flex-col items-start gap-2 sm:items-end">
-              <span className="text-[0.7rem] font-medium uppercase tracking-[0.14em] text-muted">
+              <span className="text-sm font-medium uppercase tracking-[0.14em] text-muted">
                 Recent form
               </span>
               <FormDots form={form} />
@@ -153,7 +153,7 @@ export default async function DashboardPage() {
                 </div>
                 <dl className="grid grid-cols-2 gap-3 border-t border-border pt-4 text-sm">
                   <div>
-                    <dt className="text-[0.7rem] uppercase tracking-[0.12em] text-muted">
+                    <dt className="text-sm uppercase tracking-[0.12em] text-muted">
                       Atk rounds
                     </dt>
                     <dd className="mt-1 font-display tabular-nums text-fg">
@@ -162,7 +162,7 @@ export default async function DashboardPage() {
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-[0.7rem] uppercase tracking-[0.12em] text-muted">
+                    <dt className="text-sm uppercase tracking-[0.12em] text-muted">
                       Def rounds
                     </dt>
                     <dd className="mt-1 font-display tabular-nums text-fg">
@@ -180,7 +180,7 @@ export default async function DashboardPage() {
             <div className="-mx-1 overflow-x-auto">
               <table className="w-full min-w-[34rem] border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-border text-left text-[0.7rem] uppercase tracking-[0.12em] text-muted">
+                  <tr className="border-b border-border text-left text-sm uppercase tracking-[0.12em] text-muted">
                     <th className="px-1 pb-2 font-medium">Player</th>
                     <th className="px-1 pb-2 font-medium">Agent</th>
                     <th className="px-1 pb-2 text-right font-medium">K / D / A</th>

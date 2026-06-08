@@ -79,7 +79,7 @@ export default async function TeamProfilePage({
             }}
           />
           <div className="mx-auto max-w-5xl px-6 py-9">
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted">
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
               {t("eyebrow")}
             </p>
             <h1 className="mt-2 flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -143,7 +143,7 @@ export default async function TeamProfilePage({
                       {t("opponentLine", { name: o.name, count: o.count })}
                     </p>
                     {o.tag ? (
-                      <p className="mt-0.5 font-mono text-xs text-muted">{o.tag}</p>
+                      <p className="mt-0.5 font-mono text-sm text-muted">{o.tag}</p>
                     ) : null}
                   </div>
                   <span className="shrink-0 font-display text-sm tabular-nums text-muted">
@@ -152,7 +152,7 @@ export default async function TeamProfilePage({
                 </li>
               ))}
             </ul>
-            <p className="mt-4 flex items-start gap-2 border-t border-border pt-4 text-sm leading-relaxed text-muted">
+            <p className="mt-4 flex items-start gap-2 border-t border-border pt-4 text-base leading-relaxed text-muted">
               <span aria-hidden className="mt-0.5 text-accent">
                 ◆
               </span>

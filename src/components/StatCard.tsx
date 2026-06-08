@@ -19,7 +19,7 @@ export default function StatCard({
 
   return (
     <div className="rounded-lg border border-border bg-surface p-4">
-      <p className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted">
+      <p className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
         {label}
       </p>
       <p
@@ -27,7 +27,7 @@ export default function StatCard({
       >
         {value}
       </p>
-      {sub ? <p className="mt-1.5 text-xs text-muted">{sub}</p> : null}
+      {sub ? <p className="mt-1.5 text-sm text-muted">{sub}</p> : null}
     </div>
   );
 }

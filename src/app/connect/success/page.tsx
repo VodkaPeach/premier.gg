@@ -26,7 +26,7 @@ export default function ConnectSuccessPage() {
             <span aria-hidden>✓</span>
           </div>
 
-          <span className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent-soft/60 px-2.5 py-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-accent">
+          <span className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent-soft/60 px-2.5 py-0.5 text-sm font-medium uppercase tracking-wide text-accent">
             <span className="h-1.5 w-1.5 rounded-full bg-accent" />
             {t("badge")}
           </span>
@@ -35,7 +35,7 @@ export default function ConnectSuccessPage() {
             {t("title")}
           </h2>
 
-          <p className="mt-2 text-sm leading-relaxed text-fg">{t("summary")}</p>
+          <p className="mt-2 text-base leading-relaxed text-fg">{t("summary")}</p>
           <p className="mt-1 text-sm leading-relaxed text-muted">
             {t("subtext")}
           </p>

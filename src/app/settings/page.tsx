@@ -31,7 +31,7 @@ function SettingsView() {
             }}
           />
           <div className="mx-auto max-w-3xl px-6 py-9">
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted">
+            <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
               {t("eyebrow")}
             </p>
             <h1 className="mt-2 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -53,7 +53,7 @@ function SettingsView() {
                   ME
                 </span>
                 <div>
-                  <p className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted">
+                  <p className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
                     {t("account.linked")}
                   </p>
                   <p className="mt-0.5 font-display text-base font-medium text-fg">
@@ -71,7 +71,7 @@ function SettingsView() {
                 </button>
               </form>
             </div>
-            <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted">
+            <p className="mt-4 border-t border-border pt-4 text-base leading-relaxed text-muted">
               {t("account.note")}
             </p>
           </Card>

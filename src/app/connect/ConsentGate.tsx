@@ -25,7 +25,7 @@ export default function ConsentGate() {
           />
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-0 grid place-items-center text-[0.7rem] font-bold text-white opacity-0 peer-checked:opacity-100"
+            className="pointer-events-none absolute inset-0 grid place-items-center text-sm font-bold text-white opacity-0 peer-checked:opacity-100"
           >
             ✓
           </span>
@@ -54,7 +54,7 @@ export default function ConsentGate() {
           </button>
         )}
         {!agreed ? (
-          <span className="text-xs text-muted">{t("consentHint")}</span>
+          <span className="text-sm text-muted">{t("consentHint")}</span>
         ) : null}
       </div>
     </div>

@@ -75,7 +75,7 @@ export default async function MatchPage({
 
             <div className="mt-4 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted">
+                <p className="text-sm font-medium uppercase tracking-[0.18em] text-muted">
                   Match detail
                 </p>
                 <h1 className="mt-2 flex flex-wrap items-baseline gap-x-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
@@ -117,7 +117,7 @@ export default async function MatchPage({
                     <div
                       key={r.num}
                       title={`Round ${r.num} · ${r.winner} won · ${r.outcome}`}
-                      className={`relative grid h-11 w-9 place-items-center rounded-md border text-xs font-medium tabular-nums transition-colors ${
+                      className={`relative grid h-11 w-9 place-items-center rounded-md border text-sm font-medium tabular-nums transition-colors ${
                         blueWon
                           ? "border-accent/60 bg-accent/30 text-fg"
                           : "border-loss/60 bg-loss/25 text-fg"
@@ -148,7 +148,7 @@ export default async function MatchPage({
               </div>
 
               {/* Legend */}
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-xs text-muted">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-sm text-muted">
                 <span className="flex items-center gap-1.5">
                   <span className="block h-2.5 w-2.5 rounded-sm border border-accent/60 bg-accent/30" />
                   Blue round
@@ -204,7 +204,7 @@ function ScorePill({
       >
         {score}
       </span>
-      <span className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
         {side}
         {won ? " · W" : ""}
       </span>
@@ -233,7 +233,7 @@ function Scoreboard({
           </span>
           {side}
           {won ? (
-            <span className="rounded border border-win/40 bg-win/10 px-1.5 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-win">
+            <span className="rounded border border-win/40 bg-win/10 px-1.5 py-0.5 text-sm font-semibold uppercase tracking-wide text-win">
               Won
             </span>
           ) : null}
@@ -247,7 +247,7 @@ function Scoreboard({
       <div className="-mx-1 overflow-x-auto">
         <table className="w-full min-w-[30rem] border-collapse text-sm">
           <thead>
-            <tr className="border-b border-border text-left text-[0.7rem] uppercase tracking-[0.12em] text-muted">
+            <tr className="border-b border-border text-left text-sm uppercase tracking-[0.12em] text-muted">
               <th className="px-1 pb-2 font-medium">Player</th>
               <th className="px-1 pb-2 font-medium">Agent</th>
               <th className="px-1 pb-2 text-right font-medium">K</th>

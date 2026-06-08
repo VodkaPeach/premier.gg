@@ -96,7 +96,7 @@ export default function MatchMap({
               {c.label}
             </Chip>
           ))}
-          <span className="ml-auto text-xs tabular-nums text-muted">
+          <span className="ml-auto text-sm tabular-nums text-muted">
             {shown.length} event{shown.length === 1 ? "" : "s"}
           </span>
         </div>
@@ -217,7 +217,7 @@ export default function MatchMap({
         </span>
       </div>
 
-      <figcaption className="text-xs text-muted">
+      <figcaption className="text-sm text-muted">
         Event points (kills/plants), not continuous movement.
       </figcaption>
     </figure>
@@ -242,7 +242,7 @@ function Chip({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium transition-colors ${
         active
           ? "border-accent/60 bg-accent/15 text-fg"
           : "border-border bg-surface-2 text-muted hover:text-fg"
@@ -271,7 +271,7 @@ function Segmented<T extends string>({
 }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted">
+      <span className="text-sm font-medium uppercase tracking-[0.12em] text-muted">
         {label}
       </span>
       <div
@@ -287,7 +287,7 @@ function Segmented<T extends string>({
               type="button"
               aria-pressed={active}
               onClick={() => onChange(s.value)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+              className={`rounded-md px-2.5 py-1 text-sm font-medium transition-colors ${
                 active
                   ? "bg-accent/20 text-fg shadow-[inset_0_0_0_1px_var(--accent)]"
                   : "text-muted hover:text-fg"

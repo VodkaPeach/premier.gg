@@ -45,7 +45,7 @@ export default function HomePage() {
           />
 
           <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft/60 px-3 py-1 text-xs font-medium text-accent">
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft/60 px-3 py-1 text-sm font-medium text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               {t("pill")}
             </span>

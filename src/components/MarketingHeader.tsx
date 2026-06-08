@@ -17,7 +17,7 @@ export default function MarketingHeader() {
         <div className="ml-auto flex items-center gap-3">
           <span
             title="Chinese coming soon"
-            className="hidden select-none text-xs text-muted sm:inline"
+            className="hidden select-none text-sm text-muted sm:inline"
           >
             <span className="text-fg">EN</span> · 中文
           </span>
@@ -27,7 +27,7 @@ export default function MarketingHeader() {
             className="group inline-flex items-center gap-2 rounded-md bg-accent px-3.5 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(124,92,255,0.4),0_8px_24px_-12px_rgba(124,92,255,0.8)] transition-colors hover:bg-accent/90"
           >
             {t("nav.signIn")}
-            <span className="rounded bg-white/15 px-1.5 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-white/90">
+            <span className="rounded bg-white/15 px-1.5 py-0.5 text-sm font-semibold uppercase tracking-wide text-white/90">
               {t("nav.demo")}
             </span>
           </Link>
