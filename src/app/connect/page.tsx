@@ -66,6 +66,14 @@ export default function ConnectPage() {
             </Link>
           </p>
 
+          {/* Riot-required disclaimer: account linking makes the player's data public. */}
+          <p className="mt-4 flex items-start gap-2.5 rounded-md border border-accent/30 bg-accent-soft/40 p-3.5 text-sm leading-relaxed text-fg">
+            <span aria-hidden className="mt-0.5 shrink-0 text-accent">
+              ⚠
+            </span>
+            {t("publicNotice")}
+          </p>
+
           <ConsentGate />
         </Card>
       </main>

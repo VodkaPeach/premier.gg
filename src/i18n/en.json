@@ -52,7 +52,8 @@
       "body": "A single team captain signs in; we reconstruct the team from your matches. We never look up arbitrary players — there's no search."
     },
     "privacyLink": "Read our Privacy Policy",
-    "consent": "I agree to share my Premier match data per the Privacy Policy",
+    "publicNotice": "Linking your Riot account makes your linked Premier match data publicly viewable on premier.gg (for example, on your team's public profile). You can unlink and delete your data at any time.",
+    "consent": "I agree to share my Premier match data per the Privacy Policy, and I understand that linking my account makes my linked match data public.",
     "consentHint": "Check the box to continue.",
     "continue": "Continue"
   },

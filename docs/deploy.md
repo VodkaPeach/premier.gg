@@ -41,6 +41,14 @@ database. These are the exact steps to get a public URL for the Riot application
    [`docs/application/riot-application-answers.md`](./application/riot-application-answers.md),
    and into the dev-rel inquiry if you send one.
 
+7. **Verify your domain for Riot (required for the production key).** Riot **cannot grant a
+   production key without a verified website**, and it verifies ownership via a **`riot.txt`** file
+   at the site root. When you apply, Riot gives you a verification string — add it to this repo at
+   **`public/riot.txt`** (Next.js serves everything in `public/` at the site root) and redeploy, so
+   it's reachable at `https://<your-domain>/riot.txt`. For a clearly-owned, branded domain, add a
+   custom domain under Vercel → **Settings → Domains** and verify that one (preferred over the
+   default `*.vercel.app` URL). Riot does **not** accept a GitHub repo/source in place of a live site.
+
 ## Verify after deploy
 
 Click through the walkthrough path to confirm the demo is healthy:
@@ -54,3 +62,8 @@ page. See [`docs/application/walkthrough-script.md`](./application/walkthrough-s
   the database URL are introduced in Phase 2 (real ingestion) — not now.
 - **Build:** `next build` runs the production build and statically prerenders the marketing and
   legal pages; the dashboard / match / team routes are server-rendered on demand.
+- **The demo link must load reliably.** A broken/blank/unreachable demo link is the single most
+  common reason applications are held or rejected — reviewers reject when they "cannot verify what
+  your project is intended to do." Open the deployed URL in a fresh browser (no cache, logged-out)
+  and click the full walkthrough before submitting. The live `/privacy` + `/terms` pages must also
+  be reachable (Riot reviews them).
