@@ -36,5 +36,42 @@
     },
     "trust": "We only ever show matches you've played — no opponent search, no lookup."
   },
+  "connect": {
+    "title": "Connect your Riot account",
+    "intro": "Sign in once with Riot Sign-On. We read your own Premier match history — nothing else.",
+    "read": {
+      "label": "What we read",
+      "body": "Your own Premier match history, via Riot Sign-On."
+    },
+    "show": {
+      "label": "What we show",
+      "body": "Your team, and the opponents you've personally played — based on the matches you played in."
+    },
+    "how": {
+      "label": "How it works",
+      "body": "A single team captain signs in; we reconstruct the team from your matches. We never look up arbitrary players — there's no search."
+    },
+    "privacyLink": "Read our Privacy Policy",
+    "consent": "I agree to share my Premier match data per the Privacy Policy",
+    "consentHint": "Check the box to continue.",
+    "continue": "Continue"
+  },
+  "riot": {
+    "title": "Riot Sign On",
+    "mockBadge": "Mock",
+    "banner": "Simulated login — no real Riot credentials are used. This is a demo.",
+    "riotId": "Riot ID",
+    "password": "Password",
+    "fieldsNote": "These fields are inactive — the demo doesn't collect or send any credentials.",
+    "authorize": "Authorize (demo)",
+    "cancel": "Cancel"
+  },
+  "success": {
+    "badge": "Linked",
+    "title": "Account linked",
+    "summary": "Imported 5 Premier matches for Mock Esports.",
+    "subtext": "Your demo workspace is ready. Everything from here runs on mock data.",
+    "cta": "Go to dashboard"
+  },
   "disclaimer": "premier.gg isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties."
 }
