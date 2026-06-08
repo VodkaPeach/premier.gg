@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import StatCard from "@/components/StatCard";
 import BarRow from "@/components/charts/BarRow";
-import SplitBar from "@/components/charts/SplitBar";
+import Donut from "@/components/charts/Donut";
 import FormDots from "@/components/charts/FormDots";
 
 export default async function DashboardPage() {
@@ -147,12 +147,10 @@ export default async function DashboardPage() {
 
             <Card title="Attack vs defense" className="lg:col-span-2">
               <div className="flex h-full flex-col justify-between gap-5">
-                <SplitBar
-                  leftLabel="Attack"
-                  leftValue={split.atkWinRate}
-                  rightLabel="Defense"
-                  rightValue={split.defWinRate}
-                />
+                <div className="flex items-center justify-around gap-4">
+                  <Donut value={split.atkWinRate} label="Attack" />
+                  <Donut value={split.defWinRate} label="Defense" />
+                </div>
                 <dl className="grid grid-cols-2 gap-3 border-t border-border pt-4 text-sm">
                   <div>
                     <dt className="text-[0.7rem] uppercase tracking-[0.12em] text-muted">

@@ -14,7 +14,7 @@ export function roundTimeline(match: Match): TimelineRound[] {
 }
 
 export type EventKind = "kill" | "plant" | "defuse";
-export interface EventPoint { kind: EventKind; nx: number; ny: number; side?: Side; round: number; }
+export interface EventPoint { kind: EventKind; nx: number; ny: number; round: number; }
 
 const calibFor = (map: Match["map"]) => MAP_CALIB[map as MapKey] ?? MAP_CALIB.Ascent;
 
