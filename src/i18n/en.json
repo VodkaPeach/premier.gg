@@ -1,0 +1,5 @@
+{
+  "app": { "name": "premier.gg", "tagline": "Review your VALORANT Premier matches." },
+  "nav": { "dashboard": "Dashboard", "settings": "Settings", "signIn": "Sign in with Riot", "demo": "demo" },
+  "disclaimer": "premier.gg isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties."
+}
