@@ -73,5 +73,47 @@
     "subtext": "Your demo workspace is ready. Everything from here runs on mock data.",
     "cta": "Go to dashboard"
   },
+  "settings": {
+    "eyebrow": "Account settings",
+    "title": "Settings",
+    "subtitle": "Manage your linked account, your data, and your preferences.",
+    "account": {
+      "title": "Account",
+      "linked": "Linked Riot account",
+      "identity": "Captain · Mock Esports",
+      "note": "This demo links a single mock captain. Unlinking signs you out of the demo workspace.",
+      "unlink": "Unlink account"
+    },
+    "data": {
+      "title": "Your data",
+      "intro": "You're in control of what premier.gg stores.",
+      "explainer": "In the live product this permanently deletes your stored match data. In this demo it clears your linked session.",
+      "delete": "Delete my data",
+      "confirmTitle": "Delete my data?",
+      "confirmBody": "In the live product this permanently deletes your stored match data. In this demo it clears your linked session.",
+      "confirm": "Yes, delete my data",
+      "cancel": "Cancel"
+    },
+    "language": {
+      "title": "Language",
+      "intro": "Choose the language for your workspace.",
+      "english": "English",
+      "chinese": "中文 (coming soon)",
+      "chineseTitle": "Chinese coming soon"
+    }
+  },
+  "team": {
+    "eyebrow": "Premier · public profile",
+    "winRate": "Win rate",
+    "record": "Record",
+    "matches": "Matches",
+    "mapPool": "Map pool",
+    "noMaps": "No maps played yet.",
+    "opponents": "Opponents faced",
+    "opponentLine": "vs {name} — based on {count} match(es) you played",
+    "opponentRecord": "{wins}W · {losses}L",
+    "framing": "premier.gg only shows opponents from matches this team actually played — no scouting, no player search.",
+    "notFound": "Team not found"
+  },
   "disclaimer": "premier.gg isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties."
 }
